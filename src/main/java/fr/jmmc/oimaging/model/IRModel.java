@@ -16,6 +16,7 @@ import fr.jmmc.oitools.image.FitsImage;
 import fr.jmmc.oitools.image.FitsImageFile;
 import fr.jmmc.oitools.image.FitsImageHDU;
 import static fr.jmmc.oitools.image.ImageOiConstants.KEYWORD_INIT_IMG;
+import static fr.jmmc.oitools.image.ImageOiConstants.KEYWORD_RGL_PRIO;
 import fr.jmmc.oitools.image.ImageOiData;
 import fr.jmmc.oitools.image.ImageOiInputParam;
 import fr.jmmc.oitools.image.ImageOiOutputParam;
@@ -823,6 +824,73 @@ public final class IRModel {
         } catch (IOException ioe) {
             logger.error("Can't read content of executionLog file ", ioe);
         }
+    }
+
+    /** check the IRModel.
+     * @return the errors messages. empty list if the IRModel is all good.
+     */
+    public List<String> check() {
+        List<String> errors = new ArrayList<>();
+
+        if (selectedService == null) {
+            errors.add("selectedService should not be null)");
+        } else if (ServiceList.getAvailableService(selectedService.getName()) == null) {
+            errors.add("selectedService " + selectedService.getName()
+                    + " is not known as an available service");
+        }
+
+        String initImgParam = null;
+
+        if (oifitsFile == null) {
+            errors.add("oifitsfile should not be null");
+        } else {
+            initImgParam = oifitsFile.getImageOiData().getInputParam().getInitImg();
+        }
+
+        if (inputImageView != null) {
+            switch (inputImageView) {
+                case KEYWORD_INIT_IMG:
+                    if (selectedService != null && !selectedService.supportsStandardKeyword(KEYWORD_INIT_IMG)) {
+                        errors.add("inputImageView is on INIT_IMG "
+                                + "whereas selectedService does not support initial image");
+                    }
+                    break;
+                case KEYWORD_RGL_PRIO:
+                    if (selectedService != null && !selectedService.supportsStandardKeyword(KEYWORD_RGL_PRIO)) {
+                        errors.add("inputImageView is on RGL_PRIO "
+                                + "whereas selectedService " + selectedService.getName()
+                                + " does not support regulation image");
+                    }
+                    break;
+                default:
+                    errors.add("inputImageView contains incorrect value: " + inputImageView);
+                    break;
+            }
+        }
+
+        if (selectedService.supportsStandardKeyword(KEYWORD_INIT_IMG)) {
+            if ((selectedInputImageHDU == null) || (selectedInputImageHDU == NULL_IMAGE_HDU)) {
+                if (selectedService.supportsMissingKeyword(KEYWORD_INIT_IMG)) {
+                    if (initImgParam != null && !initImgParam.isEmpty()) {
+                        errors.add("selectedInputImageHDU is null whereas INIT_IMG param is not");
+                    }
+                } else {
+                    errors.add("selectedInputImageHDU is NULL_IMAGE_HDU "
+                            + "whereas selectedService does not support this missing keyword");
+                }
+            } else {
+                if (!selectedInputImageHDU.getHduName().equals(initImgParam)) {
+                    errors.add("selectedInputImageHDU's hduName is different from INIT_IMG param");
+                }
+            }
+        } else {
+            if (selectedService != null) {
+                errors.add("selectedInputImageHDU is not null "
+                        + "whereas selectedService does not support initial image");
+            }
+        }
+
+        return errors;
     }
 
     // --- updateImageIdentifiers ---
