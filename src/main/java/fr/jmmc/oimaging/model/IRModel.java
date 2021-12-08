@@ -179,14 +179,14 @@ public final class IRModel {
     }
 
     /**
-     * Load the OiData tables of the model (oifits file, targets).
+     * Load the OiData tables of the model (oifits file, targetsArray).
      * @param oifitsFile OIFitsFile to use
      */
     private void loadOIFits(final OIFitsFile oifitsFile) {
         // change current model immediately:
         this.oifitsFile = oifitsFile;
 
-        // load targets
+        // load targetsArray
         this.targetListModel.clear();
 
         if (oifitsFile.hasOiTarget()) {
@@ -839,12 +839,36 @@ public final class IRModel {
                     + " is not known as an available service");
         }
 
-        String initImgParam = null;
+        String initImgParam = null, rglImgParam = null;
 
         if (oifitsFile == null) {
             errors.add("oifitsfile should not be null");
         } else {
             initImgParam = oifitsFile.getImageOiData().getInputParam().getInitImg();
+            rglImgParam = oifitsFile.getImageOiData().getInputParam().getRglPrio();
+
+            String selectedTarget = oifitsFile.getImageOiData().getInputParam().getTarget();
+            if (!targetListModel.contains(selectedTarget)) {
+                errors.add("Selected target " + selectedTarget + " does not belong to targetListModel");
+            }
+
+            List<FitsImageHDU> fitsImageHDUs = oifitsFile.getFitsImageHDUs();
+            List<Role> roles = getHdusRoles(oifitsFile);
+            for (int i = 0, size = roles.size(); i < size; i++) {
+                switch (roles.get(i)) {
+                    case INIT:
+                    case RESULT:
+                        if (!imageLibrary.contains(fitsImageHDUs.get(i))) {
+                            errors.add("Initial or Regulation FitsImageHDU in oifitsfile"
+                                    + " does not belong to imageLibrary");
+                        }
+                        break;
+                    case NO_ROLE:
+                    case RGL:
+                    default:
+                        break;
+                }
+            }
         }
 
         if (inputImageView != null) {
@@ -868,25 +892,53 @@ public final class IRModel {
             }
         }
 
-        if (selectedService.supportsStandardKeyword(KEYWORD_INIT_IMG)) {
-            if ((selectedInputImageHDU == null) || (selectedInputImageHDU == NULL_IMAGE_HDU)) {
-                if (selectedService.supportsMissingKeyword(KEYWORD_INIT_IMG)) {
-                    if (initImgParam != null && !initImgParam.isEmpty()) {
-                        errors.add("selectedInputImageHDU is null whereas INIT_IMG param is not");
-                    }
-                } else {
-                    errors.add("selectedInputImageHDU is NULL_IMAGE_HDU "
-                            + "whereas selectedService does not support this missing keyword");
-                }
-            } else {
-                if (!selectedInputImageHDU.getHduName().equals(initImgParam)) {
-                    errors.add("selectedInputImageHDU's hduName is different from INIT_IMG param");
-                }
+        if ((selectedInputImageHDU == null) || (selectedInputImageHDU == NULL_IMAGE_HDU)) {
+            if ((initImgParam != null) && !initImgParam.isEmpty()) {
+                errors.add("selectedInputImageHDU is null whereas INIT_IMG param is not");
+            }
+            if ((selectedService != null)
+                    && selectedService.supportsStandardKeyword(KEYWORD_INIT_IMG)
+                    && !selectedService.supportsMissingKeyword(KEYWORD_INIT_IMG)) {
+                errors.add("selectedInputImageHDU is NULL_IMAGE_HDU "
+                        + "whereas selectedService does not support this missing keyword");
             }
         } else {
-            if (selectedService != null) {
+            if (!imageLibrary.contains(selectedInputImageHDU)) {
+                errors.add("selectedInputImageHDU " + selectedInputImageHDU.getHduName()
+                        + " does not belong to the image library.");
+            }
+            if (!selectedInputImageHDU.getHduName().equals(initImgParam)) {
+                errors.add("selectedInputImageHDU's hduName is different from INIT_IMG param");
+            }
+            if ((selectedService != null)
+                    && !selectedService.supportsStandardKeyword(KEYWORD_INIT_IMG)) {
                 errors.add("selectedInputImageHDU is not null "
                         + "whereas selectedService does not support initial image");
+            }
+        }
+
+        if ((selectedRglPrioImageHdu == null) || (selectedRglPrioImageHdu == NULL_IMAGE_HDU)) {
+            if ((rglImgParam != null) && !rglImgParam.isEmpty()) {
+                errors.add("selectedRglPrioImageHdu is null whereas RGL_PRIO param is not");
+            }
+            if ((selectedService != null)
+                    && selectedService.supportsStandardKeyword(KEYWORD_RGL_PRIO)
+                    && !selectedService.supportsMissingKeyword(KEYWORD_RGL_PRIO)) {
+                errors.add("selectedRglPrioImageHdu is NULL_IMAGE_HDU "
+                        + "whereas selectedService does not support this missing keyword");
+            }
+        } else {
+            if (!imageLibrary.contains(selectedRglPrioImageHdu)) {
+                errors.add("selectedRglPrioImageHdu " + selectedRglPrioImageHdu.getHduName()
+                        + " does not belong to the image library.");
+            }
+            if (!selectedRglPrioImageHdu.getHduName().equals(rglImgParam)) {
+                errors.add("selectedRglPrioImageHdu's hduName is different from RGL_PRIO param");
+            }
+            if ((selectedService != null)
+                    && !selectedService.supportsStandardKeyword(KEYWORD_RGL_PRIO)) {
+                errors.add("selectedRglPrioImageHdu is not null "
+                        + "whereas selectedService does not support regulation image");
             }
         }
 

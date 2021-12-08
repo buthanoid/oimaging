@@ -676,7 +676,7 @@ public class MainPanel extends javax.swing.JPanel implements IRModelEventListene
 
         final IRModel irModel = IRModelManager.getInstance().getIRModel();
         currentModel = irModel;
-        logger.info("IRModel check: {}", currentModel.check());
+
         final ImageOiInputParam params = irModel.getImageOiData().getInputParam();
 
         // specific params must be updated
