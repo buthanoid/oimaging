@@ -4,6 +4,13 @@
 
 Development is made with Linux. If you want to use Windows, it would be simpler to run a virtual machine with Linux. If you really want to compile and develop directly from Windows, you should plan some time to resolve all the little bugs that will occur.
 
+### MacOS via docker on a Linux OS
+
+If you are under a Linux OS and you want to build OImaging on a MacOS you can do it via docker. Follow the tutorial at https://www.funkyspacemonkey.com/how-to-install-macos-catalina-in-a-docker-container-on-linux.
+You may need to enter the command `xhosts +` before `docker run`.
+Once you are running the MacOS virtual machine, install HomeBrew, then you can use it to install java (set the symbolic link as the installation says), maven, git, etc.
+Save your docker virtual machine with `docker commit` (look at a docker tutorial).
+
 ## Java Development Kit
 
 - OImaging aims to be compatible with version at least 1.8, so we use openjdk 1.8. Download it with your package manager or from https://openjdk.java.net/projects/jdk8/
@@ -50,7 +57,7 @@ Development is made with Linux. If you want to use Windows, it would be simpler 
 - Set the JDK 1.8 from Netbeans menu: `Tools` > `Java Platforms` > `Add Platform`.
 - You can also set the default JDK for Netbeans in the configuration file `netbeans.conf`. For example put the param `netbeans_jdkhome` to `"/usr/lib/jvm/java-8-openjdk-amd64/"` (use your own location of your jdk).
 - Be sure that `Tools` > `Options` > `Java` > `Maven` displays the correct version of Maven. If it uses a too old "bundled" one that causes bugs, set the link to your own Maven instead.
-- If Netbeans 12.6 has trouble to start properly, try to set the JDK in `netbeans.conf`, see below. 
+- If Netbeans 12.6 has trouble to start properly, try to set the JDK in `netbeans.conf`, see below.
 
 ## JMMC Java Build
 
@@ -60,7 +67,7 @@ Development is made with Linux. If you want to use Windows, it would be simpler 
 ## Contribute to OImaging development
 
 - Connect to a GitHUb account
-- Fork the [OImaging](https://github.com/JMMC-OpenDev/oimaging) project 
+- Fork the [OImaging](https://github.com/JMMC-OpenDev/oimaging) project
 - Clone your own OImaging repository on your computer
 - Open it as a NetBeans project: you can build and run from there. You will need to have followed the JMMC Java Build instructions above because OImaging needs the other projects.
 
@@ -68,7 +75,7 @@ To update your fork of OImaging with the lastest updates of the original reposit
 
 - Go to your JMMC Java Build folder and run the scripts `update_modules.sh` and `build_gui.sh`. Indeed you need the lastest versions of the other projects used by OImaging.
 - Go to your OImaging local folder.
-- If not already done, add the remote : `git remote add upstream git@github.com:JMMC-OpenDev/oimaging.git` 
+- If not already done, add the remote : `git remote add upstream git@github.com:JMMC-OpenDev/oimaging.git`
 - Fetch the updates: `git fetch upstream`
 - Merge on your master branch : `git merge upstream/master`. You are responsible for merging the conflicts, of course.
 - Push on your Github repository: `git push`.
@@ -77,3 +84,9 @@ To propose an update:
 
 - Create a branch on your fork
 - Ask for a Pull Request on GitHub
+
+## Troubleshooting
+
+### Linux Mint and Netbeans 12.4
+
+With a recent update on Linux Mint, my Netbeans 12.4 was not working anymore. I solved it by installing Netbeans 12.5 instead.
