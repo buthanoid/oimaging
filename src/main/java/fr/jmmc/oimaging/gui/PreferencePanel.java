@@ -97,6 +97,7 @@ public final class PreferencePanel extends javax.swing.JPanel implements Observe
         jPanelTableOfResults = new javax.swing.JPanel();
         jLabelResultsTableEditor = new javax.swing.JLabel();
         jButtonResultsTableEditor = new javax.swing.JButton();
+        jCheckBoxDeleteTmpInputFiles = new javax.swing.JCheckBox();
         jPanelCommonPreferencesView = new fr.jmmc.jmcs.gui.component.CommonPreferencesView();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
@@ -190,6 +191,21 @@ public final class PreferencePanel extends javax.swing.JPanel implements Observe
         gridBagConstraints.weightx = 0.5;
         jPanelTableOfResults.add(jButtonResultsTableEditor, gridBagConstraints);
 
+        jCheckBoxDeleteTmpInputFiles.setSelected(true);
+        jCheckBoxDeleteTmpInputFiles.setText("Delete temporary input files");
+        jCheckBoxDeleteTmpInputFiles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxDeleteTmpInputFilesActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        jPanelTableOfResults.add(jCheckBoxDeleteTmpInputFiles, gridBagConstraints);
+
         jPanelLayout.add(jPanelTableOfResults);
         jPanelLayout.add(jPanelCommonPreferencesView);
 
@@ -225,8 +241,17 @@ public final class PreferencePanel extends javax.swing.JPanel implements Observe
         }
     }//GEN-LAST:event_jComboBoxInterpolationActionPerformed
 
+    private void jCheckBoxDeleteTmpInputFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDeleteTmpInputFilesActionPerformed
+        try {
+            this.myPreferences.setDeleteTmpInputFiles(this.jCheckBoxDeleteTmpInputFiles.isSelected());
+        } catch (PreferencesException pe) {
+            logger.error("property failure : ", pe);
+        }
+    }//GEN-LAST:event_jCheckBoxDeleteTmpInputFilesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonResultsTableEditor;
+    private javax.swing.JCheckBox jCheckBoxDeleteTmpInputFiles;
     private javax.swing.JComboBox jComboBoxColorScale;
     private javax.swing.JComboBox jComboBoxInterpolation;
     private javax.swing.JComboBox jComboBoxLUT;
@@ -254,5 +279,7 @@ public final class PreferencePanel extends javax.swing.JPanel implements Observe
         this.jComboBoxLUT.setSelectedItem(this.myPreferences.getPreference(Preferences.MODEL_IMAGE_LUT));
         this.jComboBoxColorScale.setSelectedItem(this.myPreferences.getImageColorScale());
         this.jComboBoxInterpolation.setSelectedItem(this.myPreferences.getImageInterpolation());
+
+        this.jCheckBoxDeleteTmpInputFiles.setSelected(this.myPreferences.getDeleteTmpInputFiles());
     }
 }

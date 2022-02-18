@@ -9,6 +9,7 @@ import fr.jmmc.jmcs.util.DateUtils;
 import fr.jmmc.jmcs.util.FileUtils;
 import fr.jmmc.jmcs.util.StringUtils;
 import fr.jmmc.oiexplorer.core.util.FitsImageUtils;
+import fr.jmmc.oimaging.Preferences;
 import fr.jmmc.oimaging.services.Service;
 import fr.jmmc.oimaging.services.ServiceList;
 import fr.jmmc.oimaging.services.ServiceResult;
@@ -157,7 +158,9 @@ public final class IRModel {
         final String trunkedFileName
                      = oiFitsFile.getFileName().substring(0, Math.min(oifitsFile.getFileName().length(), 80));
 
-        final File tmpFile = FileUtils.getTempFile(trunkedFileName, ".export-" + exportCount + ".fits");
+        final boolean deleteOnExit = Preferences.getInstance().getDeleteTmpInputFiles();
+
+        final File tmpFile = FileUtils.getTempFile(trunkedFileName, ".export-" + exportCount + ".fits", deleteOnExit);
 
         // Pre-processing:
         // Ensure OIFITS File is correct.

@@ -38,6 +38,11 @@ public class Preferences extends fr.jmmc.oiexplorer.core.Preferences {
     );
 
     /**
+     * Key for the preference setting if temporary input files must be deleted at OImaging exit
+     */
+    public static final String KEY_DELETE_TMP_INPUT_FILE = "temporaryInputFiles.delete";
+
+    /**
      * Private constructor that must be empty.
      *
      * @param notify flag to enable/disable observer notifications
@@ -89,6 +94,9 @@ public class Preferences extends fr.jmmc.oiexplorer.core.Preferences {
 
         setDefaultPreference(RESULTS_COLUMNS_ALL, COLUMNS_DEFAULT_ALL);
         setDefaultPreference(RESULTS_COLUMNS_VISIBLE, COLUMNS_DEFAULT_VISIBLE);
+
+        // by default, don't keep temporary input file
+        setDefaultPreference(KEY_DELETE_TMP_INPUT_FILE, true);
     }
 
     @Override
@@ -147,5 +155,25 @@ public class Preferences extends fr.jmmc.oiexplorer.core.Preferences {
         }
         logger.debug("generateAllColumns: {}", allColumns);
         return allColumns;
+    }
+
+    /**
+     * get preference for deleting temporary input file.
+     *
+     * @return preference for deleting temporary input file
+     */
+    public boolean getDeleteTmpInputFiles() {
+        return getPreferenceAsBoolean(KEY_DELETE_TMP_INPUT_FILE);
+    }
+
+    /**
+     * Set preference for deleting temporary input files.
+     *
+     * @param b if true, temporary input files are deleted on exit of OImaging
+     * @throws PreferencesException
+     */
+    public void setDeleteTmpInputFiles(final boolean b) throws PreferencesException {
+        logger.debug("set preference {} to {}", KEY_DELETE_TMP_INPUT_FILE, b);
+        setPreference(KEY_DELETE_TMP_INPUT_FILE, b);
     }
 }
