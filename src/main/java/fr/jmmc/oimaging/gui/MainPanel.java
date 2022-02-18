@@ -691,7 +691,7 @@ public class MainPanel extends javax.swing.JPanel implements IRModelEventListene
         jButtonRunMoreIterations.setAction(ActionRegistrar.getInstance().get(fr.jmmc.oimaging.gui.action.RunMoreIterationsAction.CLASS_NAME, fr.jmmc.oimaging.gui.action.RunMoreIterationsAction.ACTION_NAME));
         jButtonRunMoreIterations.setText("Continue");
         jPanelResultsActions.add(jButtonRunMoreIterations);
-
+        
         jButtonLoadAsInput.setAction(ActionRegistrar.getInstance().get(fr.jmmc.oimaging.gui.action.LoadResultAsInputAction.CLASS_NAME, fr.jmmc.oimaging.gui.action.LoadResultAsInputAction.ACTION_NAME));
         jButtonLoadAsInput.setText("Restart");
         jButtonLoadAsInput.setActionCommand(LoadResultAsInputAction.USE_INIT_IMG_AS_INIT);
