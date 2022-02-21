@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="64cm" height="25cm" viewBox="-261 -421 1262 488" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="Layer">
+    <g>
+      <rect style="fill: #c0fbff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-260" y="-240" width="600" height="200"/>
+      <rect style="fill: #c0fbff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-260" y="-260" width="165.7" height="20"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-258" y="-245.019">SoftwareSettingsPanel</text>
+    </g>
+    <g>
+      <rect style="fill: #f8cef2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="380" y="-240" width="620" height="220"/>
+      <rect style="fill: #f8cef2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="380" y="-260" width="73.3" height="20"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="382" y="-245.019">MainPanel</text>
+    </g>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M -202.7 -120 L -133.5,-120 C -123.945,-120 -116.2,-111.046 -116.2,-100 C -116.2,-88.9543 -123.945,-80 -133.5,-80 L -202.7,-80 C -212.255,-80 -220,-88.9543 -220,-100 C -220,-111.046 -212.255,-120 -202.7,-120z"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-168.1" y="-96.1191">
+        <tspan x="-168.1" y="-96.1191">syncingUI</tspan>
+      </text>
+    </g>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 837.3 -200 L 906.5,-200 C 916.055,-200 923.8,-191.046 923.8,-180 C 923.8,-168.954 916.055,-160 906.5,-160 L 837.3,-160 C 827.745,-160 820,-168.954 820,-180 C 820,-191.046 827.745,-200 837.3,-200z"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="871.9" y="-176.119">
+        <tspan x="871.9" y="-176.119">syncingUI</tspan>
+      </text>
+    </g>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M -213.022 -200 L -105.11,-200 C -90.21,-200 -78.1315,-191.046 -78.1315,-180 C -78.1315,-168.954 -90.21,-160 -105.11,-160 L -213.022,-160 C -227.922,-160 -240,-168.954 -240,-180 C -240,-191.046 -227.922,-200 -213.022,-200z"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-159.066" y="-176.119">
+        <tspan x="-159.066" y="-176.119">jSpinnerMaxIter</tspan>
+      </text>
+    </g>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 809.775 -120 L 928.875,-120 C 945.319,-120 958.65,-111.046 958.65,-100 C 958.65,-88.9543 945.319,-80 928.875,-80 L 809.775,-80 C 793.331,-80 780,-88.9543 780,-100 C 780,-111.046 793.331,-120 809.775,-120z"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="869.325" y="-96.1191">
+        <tspan x="869.325" y="-96.1191">jComboBoxTarget</tspan>
+      </text>
+    </g>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="-9.20782" y1="-134.624" x2="-117.429" y2="-111.042"/>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="744.79" y1="-124.136" x2="788.383" y2="-115.687"/>
+    <g>
+      <rect style="fill: #e1ffa8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="60" y="-400" width="580" height="120"/>
+      <rect style="fill: #e1ffa8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="60" y="-420" width="57.9" height="20"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="62" y="-405.019">IRModel</text>
+    </g>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 535.696 -360 L 598.479,-360 C 607.148,-360 614.175,-351.046 614.175,-340 C 614.175,-328.954 607.148,-320 598.479,-320 L 535.696,-320 C 527.027,-320 520,-328.954 520,-340 C 520,-351.046 527.027,-360 535.696,-360z"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="567.087" y="-336.119">
+        <tspan x="567.087" y="-336.119">target</tspan>
+      </text>
+    </g>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="574.24" y1="-217.473" x2="568.301" y2="-319.213"/>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="744.739" y1="-169.839" x2="818.901" y2="-175.765"/>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="-7.7" y="-220" width="307.9" height="103" rx="0" ry="0"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="0.8" y="-196.619">
+        <tspan x="0.8" y="-196.619">[3] syncUI() {</tspan>
+        <tspan xml:space="preserve" x="0.8" y="-180.619">   syncingUI = true;</tspan>
+        <tspan xml:space="preserve" x="0.8" y="-164.619">   jSpinnerMaxIter.setValue(maxIter);</tspan>
+        <tspan xml:space="preserve" x="0.8" y="-148.619">   syncingUI = false;</tspan>
+        <tspan x="0.8" y="-132.619">}</tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x1="410.8" y1="-161.144" x2="313.176" y2="-163.858"/>
+      <path style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 410.8 -161.144 C 410.73,-158.645 408.162,-156.215 405.663,-156.285 C 403.163,-156.354 400.734,-158.923 400.803,-161.422 C 400.873,-163.921 403.441,-166.35 405.94,-166.281 C 408.44,-166.211 410.869,-163.643 410.8,-161.144z"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" points="313.315,-168.856 303.18,-164.136 313.037,-158.86 "/>
+    </g>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="-9.18448" y1="-174.355" x2="-76.9506" y2="-176.907"/>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 120 -360 L 200,-360 C 211.046,-360 220,-351.046 220,-340 C 220,-328.954 211.046,-320 200,-320 L 120,-320 C 108.954,-320 100,-328.954 100,-340 C 100,-351.046 108.954,-360 120,-360z"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="160" y="-336.119">
+        <tspan x="160" y="-336.119">maxIter</tspan>
+      </text>
+    </g>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="150.497" y1="-221.466" x2="158.277" y2="-318.51"/>
+    <g>
+      <path style="fill: #f6ee90; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 500 24.3125 C 532,30.0625 548,30.0625 580,24.3125 C 612,18.5625 628,18.5625 660,24.3125 L 660,58.8125 C 628,53.0625 612,53.0625 580,58.8125 C 548,64.5625 532,64.5625 500,58.8125 L 500,24.3125z"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="580" y="45.4434">
+        <tspan x="580" y="45.4434">IRMODEL_CHANGED</tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x1="579.737" y1="22.9306" x2="578.582" y2="-84.046"/>
+      <path style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 579.737 22.9306 C 577.237,22.9576 574.71,20.4847 574.683,17.9849 C 574.656,15.485 577.129,12.9582 579.629,12.9312 C 582.129,12.9042 584.656,15.3771 584.683,17.877 C 584.71,20.3768 582.237,22.9036 579.737,22.9306z"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" points="583.582,-84.1 578.474,-94.0454 573.582,-83.992 "/>
+    </g>
+    <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="600" y="-40">
+      <tspan x="600" y="-40">triggered by asynchronous event</tspan>
+    </text>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="412.3" y="-216" width="331" height="119" rx="0" ry="0"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="420.8" y="-192.619">
+        <tspan x="420.8" y="-192.619">syncUI(IRModelEvent) {</tspan>
+        <tspan xml:space="preserve" x="420.8" y="-176.619">   syncingUI = true;</tspan>
+        <tspan xml:space="preserve" x="420.8" y="-160.619">   [2] jComboBoxTarget.setValue(target);</tspan>
+        <tspan xml:space="preserve" x="420.8" y="-144.619">   [3] SoftwareSettingsPanel.syncUI();</tspan>
+        <tspan xml:space="preserve" x="420.8" y="-128.619">   syncingUI = false;</tspan>
+        <tspan x="420.8" y="-112.619">}</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

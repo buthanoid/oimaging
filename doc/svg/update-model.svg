@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="64cm" height="32cm" viewBox="-241 -421 1262 624" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="Layer">
+    <g>
+      <rect style="fill: #c0fbff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-240" y="-240" width="680" height="400"/>
+      <rect style="fill: #c0fbff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-240" y="-260" width="165.7" height="20"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-238" y="-245.019">SoftwareSettingsPanel</text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="-2.15" y="20" width="324.3" height="40" rx="0" ry="0"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="160" y="43.8812">
+        <tspan x="160" y="43.8812">[2] jSpinnerMaxIterStateChanged(ActionEvent)</tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x1="160" y1="200" x2="160" y2="72.9941"/>
+      <path style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 160 200 C 157.5,200 155,197.5 155,195 C 155,192.5 157.5,190 160,190 C 162.5,190 165,192.5 165,195 C 165,197.5 162.5,200 160,200z"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" points="165,72.9941 160,62.9941 155,72.9941 "/>
+    </g>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="180" y="120">
+      <tspan x="180" y="120">[1] click on MAXITER field</tspan>
+    </text>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="0" y="-60" width="320" height="39" rx="0" ry="0"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="160" y="-36.6188">
+        <tspan x="160" y="-36.6188">[3] updateModel(boolean)</tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x1="160" y1="18.5189" x2="160" y2="-8.00043"/>
+      <path style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 160 18.5189 C 157.5,18.5189 155,16.0189 155,13.5189 C 155,11.0189 157.5,8.51892 160,8.51892 C 162.5,8.51892 165,11.0189 165,13.5189 C 165,16.0189 162.5,18.5189 160,18.5189z"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" points="165,-8.00043 160,-18.0004 155,-8.00043 "/>
+    </g>
+    <g>
+      <rect style="fill: #f8cef2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="480" y="-240" width="540" height="280"/>
+      <rect style="fill: #f8cef2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="480" y="-260" width="73.3" height="20"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="482" y="-245.019">MainPanel</text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="523.85" y="-128" width="377.2" height="119" rx="0" ry="0"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="532.35" y="-104.619">
+        <tspan x="532.35" y="-104.619">[4] updateModel(boolean) {</tspan>
+        <tspan xml:space="preserve" x="532.35" y="-88.6188">   if ! syncingUI</tspan>
+        <tspan xml:space="preserve" x="532.35" y="-72.6188">   target = jComboBoxTarget.getValue();</tspan>
+        <tspan xml:space="preserve" x="532.35" y="-56.6188">   SoftwareSettingsPanel.updateModel(irModel);</tspan>
+        <tspan xml:space="preserve" x="532.35" y="-40.6188">   fireEvent(IRMODEL_CHANGED);</tspan>
+        <tspan x="532.35" y="-24.6188">}</tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x1="321.48" y1="-48.6843" x2="510.891" y2="-58.2843"/>
+      <path style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 321.48 -48.6843 C 321.353,-51.1811 323.723,-53.8045 326.22,-53.931 C 328.717,-54.0576 331.34,-51.6873 331.467,-49.1905 C 331.593,-46.6937 329.223,-44.0704 326.726,-43.9438 C 324.23,-43.8173 321.606,-46.1875 321.48,-48.6843z"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" points="511.145,-53.2908 520.879,-58.7905 510.638,-63.2779 "/>
+    </g>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="340" y="-60">
+      <tspan x="340" y="-60">if !syncingUI</tspan>
+    </text>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M -177.588 -60 L -108.238,-60 C -98.6623,-60 -90.9,-51.0457 -90.9,-40 C -90.9,-28.9543 -98.6623,-20 -108.238,-20 L -177.588,-20 C -187.163,-20 -194.925,-28.9543 -194.925,-40 C -194.925,-51.0457 -187.163,-60 -177.588,-60z"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-142.913" y="-36.1187">
+        <tspan x="-142.913" y="-36.1187">syncingUI</tspan>
+      </text>
+    </g>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 697.337 -200 L 766.687,-200 C 776.263,-200 784.025,-191.046 784.025,-180 C 784.025,-168.954 776.263,-160 766.687,-160 L 697.337,-160 C 687.762,-160 680,-168.954 680,-180 C 680,-191.046 687.762,-200 697.337,-200z"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="732.012" y="-176.119">
+        <tspan x="732.012" y="-176.119">syncingUI</tspan>
+      </text>
+    </g>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M -192.947 -200 L -84.7344,-200 C -69.7933,-200 -57.6812,-191.046 -57.6812,-180 C -57.6812,-168.954 -69.7933,-160 -84.7344,-160 L -192.947,-160 C -207.888,-160 -220,-168.954 -220,-180 C -220,-191.046 -207.888,-200 -192.947,-200z"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-138.841" y="-176.119">
+        <tspan x="-138.841" y="-176.119">jSpinnerMaxIter</tspan>
+      </text>
+    </g>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 849.825 -200 L 969.125,-200 C 985.597,-200 998.95,-191.046 998.95,-180 C 998.95,-168.954 985.597,-160 969.125,-160 L 849.825,-160 C 833.353,-160 820,-168.954 820,-180 C 820,-191.046 833.353,-200 849.825,-200z"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="909.475" y="-176.119">
+        <tspan x="909.475" y="-176.119">jComboBoxTarget</tspan>
+      </text>
+    </g>
+    <image x="-160" y="100" width="280" height="41.6099" xlink:href="file:///home/antoine/Documents/fork-oimaging/doc/img/max-iter.png"/>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="-1.21808" y1="-40.2339" x2="-89.6429" y2="-40.0879"/>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="820.222" y1="-129.49" x2="871.523" y2="-158.522"/>
+    <g>
+      <rect style="fill: #e1ffa8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="80" y="-400" width="580" height="120"/>
+      <rect style="fill: #e1ffa8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="80" y="-420" width="57.9" height="20"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="82" y="-405.019">IRModel</text>
+    </g>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 552.362 -360 L 601.812,-360 C 608.64,-360 614.175,-351.046 614.175,-340 C 614.175,-328.954 608.64,-320 601.812,-320 L 552.362,-320 C 545.535,-320 540,-328.954 540,-340 C 540,-351.046 545.535,-360 552.362,-360z"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="577.087" y="-336.119">
+        <tspan x="577.087" y="-336.119">target</tspan>
+      </text>
+    </g>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="682.038" y1="-129.498" x2="587.803" y2="-318.507"/>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="723.151" y1="-129.49" x2="728.244" y2="-158.522"/>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="0" y="-200" width="331" height="71" rx="0" ry="0"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="8.5" y="-176.619">
+        <tspan x="8.5" y="-176.619">[5] updateModel(IRModel) {</tspan>
+        <tspan xml:space="preserve" x="8.5" y="-160.619">   maxIter = jSpinnerMaxIter.getValue();</tspan>
+        <tspan x="8.5" y="-144.619">}</tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x1="522.349" y1="-101.866" x2="343.826" y2="-133.2"/>
+      <path style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 522.349 -101.866 C 521.917,-99.4039 519.023,-97.3737 516.56,-97.8059 C 514.098,-98.2381 512.068,-101.133 512.5,-103.595 C 512.932,-106.057 515.827,-108.087 518.289,-107.655 C 520.752,-107.223 522.782,-104.329 522.349,-101.866z"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" points="344.691,-138.125 333.977,-134.929 342.962,-128.276 "/>
+    </g>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="-1.50283" y1="-173.005" x2="-56.7649" y2="-175.82"/>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 120 -360 L 200,-360 C 211.046,-360 220,-351.046 220,-340 C 220,-328.954 211.046,-320 200,-320 L 120,-320 C 108.954,-320 100,-328.954 100,-340 C 100,-351.046 108.954,-360 120,-360z"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="160" y="-336.119">
+        <tspan x="160" y="-336.119">maxIter</tspan>
+      </text>
+    </g>
+    <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="164.361" y1="-200.834" x2="160.673" y2="-318.534"/>
+    <g>
+      <path style="fill: #f6ee90; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 640 84.3125 C 671.83,90.0625 687.745,90.0625 719.575,84.3125 C 751.405,78.5625 767.32,78.5625 799.15,84.3125 L 799.15,118.812 C 767.32,113.062 751.405,113.062 719.575,118.812 C 687.745,124.562 671.83,124.562 640,118.812 L 640,84.3125z"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="719.575" y="105.444">
+        <tspan x="719.575" y="105.444">IRMODEL_CHANGED</tspan>
+      </text>
+    </g>
+    <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="740" y="20">
+      <tspan x="740" y="20">[6] fire asynchronous event</tspan>
+    </text>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x1="714.922" y1="-7.49572" x2="718.123" y2="71.4739"/>
+      <path style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 714.922 -7.49572 C 717.42,-7.59696 720.019,-5.20024 720.121,-2.70229 C 720.222,-0.204339 717.825,2.39484 715.327,2.49607 C 712.829,2.59731 710.23,0.200589 710.129,-2.29736 C 710.028,-4.79531 712.424,-7.39449 714.922,-7.49572z"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" points="713.127,71.6763 718.528,81.4657 723.118,71.2714 "/>
+    </g>
+  </g>
+</svg>

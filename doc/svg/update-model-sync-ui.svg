@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="29cm" height="13cm" viewBox="-161 -241 562 243" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="Layer">
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M -100 -74 C -72,-66 -58,-66 -30,-74 C -2,-82 12,-82 40,-74 L 40,-26 C 12,-34 -2,-34 -30,-26 C -58,-18 -72,-18 -100,-26 L -100,-74z"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-30" y="-46.1191">
+        <tspan x="-30" y="-46.1191">click on button</tspan>
+      </text>
+    </g>
+    <g>
+      <path style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 160 -213.688 C 204,-205.271 226,-205.271 270,-213.688 C 314,-222.104 336,-222.104 380,-213.688 L 380,-163.187 C 336,-171.604 314,-171.604 270,-163.187 C 226,-154.771 204,-154.771 160,-163.187 L 160,-213.688z"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="270" y="-184.557">
+        <tspan x="270" y="-184.557">event IRMODEL_CHANGED</tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x1="-30" y1="-75.4893" x2="-30" y2="-128.5"/>
+      <path style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M -30 -75.4893 C -32.5,-75.4893 -35,-77.9893 -35,-80.4893 C -35,-82.9893 -32.5,-85.4893 -30,-85.4893 C -27.5,-85.4893 -25,-82.9893 -25,-80.4893 C -25,-77.9893 -27.5,-75.4893 -30,-75.4893z"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" points="-25,-128.5 -30,-138.5 -35,-128.5 "/>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x1="99.9683" y1="-180.009" x2="147.007" y2="-180.012"/>
+      <path style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" d="M 99.9683 -180.009 C 99.9681,-182.509 102.468,-185.009 104.968,-185.009 C 107.468,-185.01 109.968,-182.51 109.968,-180.01 C 109.968,-177.51 107.469,-175.01 104.969,-175.009 C 102.469,-175.009 99.9684,-177.509 99.9683,-180.009z"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" points="147.007,-175.012 157.007,-180.013 147.007,-185.012 "/>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 3; stroke-dasharray: 8; stroke: #000000" x1="270" y1="-161.655" x2="270" y2="-90.8588"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" fill-rule="evenodd" points="270,-83.3588 265,-93.3588 270,-90.8588 275,-93.3588 "/>
+    </g>
+    <g>
+      <rect style="fill: #e6e6fa; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-160" y="-220" width="260" height="80"/>
+      <rect style="fill: #e6e6fa; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-160" y="-240" width="104.1" height="20"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-158" y="-225.019">updateModel()</text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="0" y="-200" width="80" height="36" rx="10" ry="10"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="40" y="-178.119">
+        <tspan x="40" y="-178.119">IRModel</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="-140" y="-200" width="85.35" height="36" rx="10" ry="10"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-97.325" y="-178.119">
+        <tspan x="-97.325" y="-178.119">Swing GUI</tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 5; stroke: #000000" x1="-53.6566" y1="-182" x2="-14.0765" y2="-182"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 5; stroke: #000000" fill-rule="evenodd" points="-6.57645,-182 -16.5765,-177 -14.0765,-182 -16.5765,-187 "/>
+    </g>
+    <g>
+      <rect style="fill: #ffefd1; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="140" y="-80" width="260" height="80"/>
+      <rect style="fill: #ffefd1; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="140" y="-100" width="65.6" height="20"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="142" y="-85.0186">syncUI()</text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="300" y="-60" width="80" height="36" rx="10" ry="10"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="340" y="-38.1189">
+        <tspan x="340" y="-38.1189">IRModel</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="160" y="-60" width="85.35" height="36" rx="10" ry="10"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="202.675" y="-38.1189">
+        <tspan x="202.675" y="-38.1189">Swing GUI</tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 5; stroke: #000000" x1="299.014" y1="-42" x2="259.434" y2="-42"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 5; stroke: #000000" fill-rule="evenodd" points="251.934,-42 261.934,-47 259.434,-42 261.934,-37 "/>
+    </g>
+    <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="280" y="-120">
+      <tspan x="280" y="-120">asynchronous</tspan>
+    </text>
+  </g>
+</svg>
