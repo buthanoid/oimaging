@@ -1,0 +1,35 @@
+<h1 id="sequence-on-click">Sequence on click</h1>
+<p>Here is what happen when you click on a button in OImaging.</p>
+<h2 id="state-in-irmodel-and-swing-gui-panels">State in IRModel and Swing GUI panels</h2>
+<p>In OImaging there is a central state in the <code>IRModel</code> class.</p>
+<p>But every Swing field, such as the list selector for initial images <code>jComboBoxImage</code>, has its own state. This state contains not only the list of selectable images, but also the currently selected image, and some other state needed for the list widget to work.</p>
+<p><img src="svg/irmodel-state.svg" /></p>
+<p>There is indeed a duplication of state between <code>IRModel</code> and the panels <code>MainPanel</code> and <code>SoftwareSettingsPanel</code>.</p>
+<p>The benefit of having a central state is that it is easier to maintain its consistency. Also, it makes it easier to modify the state of OImaging, you just have to call <em>setters</em> of <code>IRModel</code>.</p>
+<p>The drawback of having a duplication of state is that you must maintain synchronization between <code>IRModel</code> state and Swing GUI fields states. This is achieved by the two mechanisms <em>update model</em> and <em>sync UI</em>:</p>
+<p><img src="svg/update-model-sync-ui.svg" /></p>
+<p>The mechanism <em>update model</em> reads the states of the Swing GUI panels and writes it to the <code>IRModel</code> state.</p>
+<p>The mechanism <em>sync UI</em> reads the state of <code>IRModel</code> and writes it to the Swing GUI panels states. You will have observed that <em>sync UI</em> is triggered only by the reception of an asynchronous event. This permits to compress a bunch of calls to syncUI into a single one. Observe also that a call to a setter of <code>IRModel</code> must cast an event in order to see the GUI updated. It is not automatic, you must manually cast the event.</p>
+<h2 id="update-model">Update Model</h2>
+<p><img src="svg/update-model.svg" /></p>
+<p>The <code>jSpinnerMaxIterStateChanged</code> function is the handler for value change of the field <code>jSpinnerMaxIter</code>. Clicking on the up arrow updates the value of <code>jSpinnerMaxIter</code>, which trigger the handler.</p>
+<p>Understand that there is an arborescence of panels. Here <code>MainPanel</code> is the root and <code>SoftwareSettingsPanel</code> is its child. When you click on a button of <code>SoftwareSettingsPanel</code>, there is a <em>bottom up</em> mechanism to call the <em>root update model</em> function. Then the <em>update model</em> functions of the children are called. The mechanism ends by casting an event asking for <em>sync UI</em>.</p>
+<p>Note that all fields are written to the <code>IRModel</code> state, not only the field where there was an event.</p>
+<p>You will have noticed the presence of <code>syncingUI</code> state and conditions. These are explained in the <em>sync UI</em> section.</p>
+<h2 id="sync-ui">Sync UI</h2>
+<p><img src="svg/sync-ui.svg" /></p>
+<p>Like <em>update model</em>, the mechanism <em>sync UI</em> starts with the <em>root panel</em>, and propagates to the children.</p>
+<p>Note that we always surround the mechanism by setting <code>syncingUI</code> to <code>true</code>. Indeed, when we call setters on Swing GUI fields, it triggers their value change handlers, which triggers the <em>update model</em> mechanism. Here we do not need nor want to process <em>update model</em>, because we are currently making <code>IRModel</code> state and Swing GUI fields states identical. That is why the <em>update model</em> mechanism is aborted when <code>syncingUI</code> is <code>true</code>.</p>
+<h2 id="beware-of-events">Beware of events</h2>
+<p>When you modify <code>IRModel</code> state, for example by calling one of its setter, you finally cast an <code>IRMODEL_CHANGED</code> event. However, it can happen that another event has been triggered and will resolve <em>before</em> your <code>IRMODEL_CHANGED</code> event. It becomes a problem when that other event modify a Swing GUI field and thus call synchronously the <em>update model</em> mechanism. Here is what happen:</p>
+<ol type="1">
+<li><code>IRModel.image</code> state is <code>"cat.png"</code>. Swing GUI image field state is <code>"cat.png"</code>.</li>
+<li>Your code calls <code>IRModel.image.setValue("dog.png");</code>, making <code>IRModel.image</code> state becoming <code>"dog.png"</code>.</li>
+<li>At the same time, some event occurs, let us call it <code>SOME_EVENT</code>.</li>
+<li>Your code casts the event <code>IRMODEL_CHANGED</code>.</li>
+<li>The event <code>SOME_EVENT</code> is handled, and synchronously calls <em>update model</em>.</li>
+<li>The mechanism <em>update model</em> reads <code>"cat.png"</code> from Swing GUI image field state, and writes it to <code>IRModel.image</code> state.</li>
+<li>Your event <code>IRMODEL_CHANGED</code> is handled, and synchronously calls <em>sync UI</em>. However it is now pointless because <code>"dog.png"</code> has been lost.</li>
+</ol>
+<p>Generally, make your handlers only call <em>update model</em> when some significant value update has occured.</p>
+<style>body { max-width: 1000px; } img { max-width: 100%; }</style>
