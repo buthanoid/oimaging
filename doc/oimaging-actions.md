@@ -1,39 +1,41 @@
-This page lists all the actions that are available in OImaging. A one-line list, then a detailed list. There is also explanations about what is an *action* in the third part of the page.
+# Actions in OImaging
 
-# List of actions
+This page lists all the actions that are available in OImaging. A one-line list, then a detailed list. There is also explanations about what is an *action* in the third section of the present document.
+
+## List of actions
 
 Non-strictly grouped by theme:
 
-## File loading
+### File loading from disk
 
-- [`Load OIFitsFile`](#load-oifitsfile): load an OIFits file and fill the input form with it
-- [`Load FitsImageFile`](#load-fitsimagefile): load a Fits file and add call `Add Image` for each image
-- [`Load Result`](#load-result): load an OIFits file and add it to the result table
+- [`Load OIFitsFile`](#load-oifitsfile): load an OIFits file from disk and fill the input form with it
+- [`Load FitsImageFile`](#load-fitsimagefile): load a Fits file from disk and add call `Add Image` for each image
+- [`Load Result`](#load-result): load an OIFits file and add it to the result table [DevMode restricted]
 
-## File saving
+### File saving to disk
 
 - [`Save OIFitsFile`](#save-oifitsfile): save an OIFits file (from a result or from the input form) to the disc memory
-- [`Save FitsImageFile`](#save-fitsimagefile): save an image in a Fits file (image from library of from result) to the disc memory
+- [`Save FitsImageFile`](#save-fitsimagefile): save an image (from input form or from result) in a Fits file to the disc memory
 
-## SAMP communication
+### SAMP communication
 
 - `Register SAMP`: register to the *SAMP hub*
 - `SAMP Status:`: display *SAMP hub* status
-- `Send OIFitsFile`: send an OIFits file containing mainly data by *SAMP*
-- `Send FitsImageFile`: send a Fits file containing mainly images by *SAMP*
+- `Send OIFitsFile`: send an OIFits file by *SAMP*
+- `Send FitsImageFile`: send a Fits file by *SAMP*
 - `Receive OIFitsFile`: receive an OIFits file by *SAMP* and call `Load OIFitsFile`
 - `Receive FitsImageFile`: receive a Fits file by *SAMP* and call `Load FitsImageFile`
 
-## Images and Image Library
+### Images and Image Library
 
-- [`Add Image`](#add-image): add an image to the library, respecting the no duplicates rule, and gives back an equivalent image from library
+- [`Add Image`](#add-image): add an image to the library, respecting the no duplicates rule, and gives back an equivalent image from library [internal]
 - [`Remove Image`](#remove-image): remove an image from the library
 - [`Create Image`](#create-image): create a gaussian image and add call `Add Image`
 - [`Modify Image`](#modify-image): modify *FOV* and *scale* of an image (from a result or from library) and call `Add Image`
 
 See also the `Load FitsImageFile` action.
 
-## Input form
+### Input form
 
 - [`Start Run`](#start-run): start a *run* with the current input form. Call the asynchronous action `End Run`
 - `Select Target`: select a target among the list of targets
@@ -48,7 +50,7 @@ See also the `Load FitsImageFile` action.
 
 This list is not exhaustive as the software parameters are somewhat dynamic. It always consists of some buttons, list of selections, text input...
 
-## Results table
+### Results table
 
 - `Select Result`: select a result (line) in the table
 - `Select Several Results`: select several results (lines) in the table
@@ -61,7 +63,7 @@ This list is not exhaustive as the software parameters are somewhat dynamic. It 
 - `Load as input`: call `Load OIFitsFile` with the selected result, and move to the *Input tab*
 - `Load as input with last img`: same as `Load as input`, but the final image is used for the init image in the input form
 
-## Viewer Panels
+### Viewer Panels
 
 - `Display Image`: display the image view of the currently selected OIFitsFile
 - `Display OIfits`: display the oifits data of the currently selected OIFitsFile
@@ -77,7 +79,7 @@ This list is not exhaustive as the software parameters are somewhat dynamic. It 
 
 See also `Modify Image`.
 
-## General
+### General
 
 - `End Run`: add the run's result to the table of results, and prepare the input form for the next run
 - `Reset`: clear all data and reset interface
@@ -89,116 +91,119 @@ See also `Modify Image`.
 - `Release Notes`: display release notes
 - `About`: display general information
 
-# Detailed list of actions
+## Detailed list of actions
 
 Same list as above, with more informative content for each action.
 
-## File loading
+### File loading from disk
 
-### Load OIFitsFile
+#### Load OIFitsFile
 
-- Goal: load an OIFits file and fill the input form with it.
+- Goal: load an OIFits file from disk and fill the input form with it.
 - Description:
-  - It copies the `OIFits` file in the `OIFits` file associated to the input form.
-  - It adds every image in the file to the image library.
-  - It makes the input form widgets agree with the associated OIFits file
-  - The initial image in the `OIFits` file is set as initial image in the input form.
-  - The regulation image in the `OIFits` file is set as regulation image in the input form.
+  - Creates a Java `OIFitsFile` object from the data found in the file.
+  - Sets the created `OIFitsFile` as the `OIFitsFile` associated to the input form.
+  - Calls `Add Image` action for every image in the `OIFitsFile`.
+  - Makes the input form widgets agree with the associated OIFits file
+  - The output params are deleted.
   - The view is focused on the initial image of the input form.
-- Trigger: button "Load an OIFits file", menu button "File > Load OIFits file".
+- Called by: button "Load an OIFits file", menu button "File > Load OIFits file", action `Receive OIFitsFile`, action `Run More Iterations`, action `Load as Input`, action `Load as input with last img`.
 - Notes:
-  - Only the `FitsImageHDu` pointed to by parameters `INIT_IMG` and `RGL_PRIO` are kept in the `OIFits` file.
-  - It may modify the loaded `OIFits` file. This is because the image library does not accept equivalent-duplicates, and the selected initial image in the input form must belong to the image library, and the selected initial image in the input form must be the one present in the `OIFits` file. Thus, if we load an `OIFits` file with an initial image that has an existing equivalent in the image library, we change the image HDU in the OIFits file to the one that is already in the image library. We modify parameter `INIT_IMG` accordingly.
-  - It is normal if we select an initial image, then execute this action, and observe that our initial image has been set to `null`. Because this action makes the input form agree with the loaded `OIFitsFile`, if the latter has `INIT_IMG` parameter set to `null`, so must our initial image be.
+  - Only the images pointed to by parameters `INIT_IMG` and `RGL_PRIO` are kept in the `OIFits` file.
+  - May modify slightly the images. Indeed, the selected initial image in the `OIFitsFile` must also belong to the image library. However the image library refuses to contain two equivalents images. Thus, when loading the `OIFitsFile`, it there was already an equivalent image in the library, this latter image will replace the one in the `OIFitsFile`. This can also update the `INIT_IMG` input parameter, to reflect the potential update of `HDU_NAME`.
+  - It is normal, if we select an initial image, and then execute the present action, to observe that our initial image has been set to `null`. Because this action makes the input form agree with the loaded `OIFitsFile`, if the latter has `INIT_IMG` parameter set to `null`, so must be  our initial image.
 
-### Load FitsImageFile
+#### Load FitsImageFile
 
-- Goal: load an `OIFits` file and add call `Add Image` for each image.
+- Goal: load a Fits file from disk and add call `Add Image` for each image.
 - Description:
-  - It adds every image from the `OIFits` file to the image library
-  - It set the first image as initial image in the input form
-- Trigger: button "Load a Fits Image file", menu button "File > Load Fits Image file".
+  - Creates a Java `FitsImageFile` object from the data found in the file.
+  - Adds every image from the `OIFits` file to the image library
+  - Sets the first image as initial image in the input form
+- Called by: button "Load a Fits Image file", menu button "File > Load Fits Image file", action `Receive FitsImageFile`.
 
-### Load Result
+#### Load Result
 
-- Goal: load an `OIFits` file and add it to the result table.
+- Goal: load an OIFits file and add it to the result table.
 - Description:
-  - Rebuild a complete `ServiceResult` object from the `OIFits` file
-  - It calls the action `End Result`.
-- Trigger: the *dev mode* loads all `OIFits` files from `~/.jmmc-/devmode/`. This action is unreachable from the interface.
+  - Rebuilds a complete `ServiceResult` object from the `OIFits` file
+  - Calls the action `End Result`.
+- Called by: the *dev mode* loads all `OIFits` files from `~/.jmmc-/devmode/`. This action is unreachable from the interface.
 
-## File saving
+### File saving to disk
 
-### Save OIFitsFile
+#### Save OIFitsFile
 
-- Goal: save an `OIFits` file (from a result or from the input form) to the disc memory
+- Goal: save an OIFits file (from input form or from result) to the disc memory
 - Description:
-  - If the view is focused on input form, the input form's associated `OIFits` file is the one saved. Else, if the view is focused on results, the `OIFits` file associated to the one selected result is saved. If several results are selected this function refuses to apply.
-- Trigger: button "Save OIFits file", and menu button "File > Save OIFits file".
+  - If the view is focused on input form, the input form's associated `OIFitsFile` is the one saved. Else, if the view is focused on results, the `OIFits` file associated to the one selected result is saved. If several results or zero result are selected, this function refuses to apply.
+- Called by: button "Save OIFits file", and menu button "File > Save OIFits file".
 
-### Save FitsImageFile
+#### Save FitsImageFile
 
-- Goal: save an image in an OIFits file (image from library of from result) to the disc memory.
+- Goal: save an image (from input form or from result) in a Fits file to the disc memory.
 - Description:
   - Create a new FitsImageFile object.
   - Add to it the FitsImageHDU associated to the currently displayed image.
   - Save the FitsImageFile to a file.
-- Trigger: menu button "File > Save Fits Image file"
+- Called by: menu button "File > Save Fits Image file"
 
-## Images and Image Library
+### Images and Image Library
 
-### Add Image
+#### Add Image
 
-- Goal: add an image to the library, respecting no duplicates, and gives back an equivalent image from library
+- Goal: add an image to the library, respecting the no duplicates rule, and gives back an equivalent image from library.
 - Description:
   - The image is stored in a `FitsImageHDU` object
-  - It is checked that there is no existing equivalent `FitsImageHDU` in the image library. If there is one, the action just gives back this latter one. If there is none, the action returns the new `FitsImageHDU`. Equivalence is defined by `checksum` equality.
+  - It is checked that there is no existing equivalent `FitsImageHDU` in the image library. If there is one, the action just gives back this latter one. If there is none, the action returns the new `FitsImageHDU`. Equivalence is defined by the `MATCHER` function in `FitsImageHDU`.
   - Unicity of `hduName` is enforced in the image library. A new added `FitsImageHDU` can then have its `hduName` renamed in place.
-- Trigger: actions `Load FitsImageFile`,`Load OIFitsFile`, `Create Image`, `Modify Image`, `End Result`.
+- Called by: actions `Load FitsImageFile`,`Load OIFitsFile`, `Create Image`, `Modify Image`.
 - Notes:
   - `null` or `NULL_IMAGE_HDU` cannot be added to the image library
   - a `FitsImageHDU` with no images cannot be added to the image library
+  - if you don't want your `FitsImageHDU` to have its `HDU_NAME` modified, you should use a copy of it
 
-### Remove Image
+#### Remove Image
 
 - Goal: remove an image from the library
+- Called by: button "-" in input form. 
 - Notes: Unselect initial and regulation images that were using the removed image.
 
-### Create Image
+#### Create Image
 
 - Goal: create a gaussian image and add call `Add Image`
 - Description:
   - User can specify *FOV* in mas, *increments* in mas, *FWHM* in mas, `hduName`. *Image size* in number of pixels is the quotient of the division `FOV / increments`. *Increments* are then adjusted to respect better the equation `FOV = increments * imageSize`.
+  - Creates image and calls `Add Image`.
   - Interface focus on the created image.
-- Trigger: button "Create Image", menu button "Processing > Create Image"
+- Called by: button "Create Image", menu button "Processing > Create Image"
 - Notes:
-  - Created image is a square, the length of it side is even and strictly positive.
+  - Created image is a square, the length of it side is an integer, even and strictly positive.
 
-### Modify Image
+#### Modify Image
 
 - Goal: modify *FOV* and *scale* of an image (from a result or from library) and call `Add Image`
 - Description:
   - Modification is not in place: a new `FitsImageHDU` is created to store the modified image. The original `FitsImageHDU` and its image remain unmodified.
   - User can modify *FOV* in mas, *increments* in mas. *Image size* in number of pixels is the quotient of the division `FOV / increments`. *FOV* and *increments* are adjusted to respect better the equation `FOV = increments * imageSize`.
-  - If initial and regulation image were pointing to the unmodified `FitsImageHDU`, they are updated to point to the new modified one.
-  - Interface focus on the modified image.
-- Trigger: button "Modify Image", menu button "Processing > Modify Image".
+  - If initial and regulation image were pointing to the original `FitsImageHDU`, they are updated to point to the new modified one.
+- Called by: button "Modify Image", menu button "Processing > Modify Image".
 - Notes:
   - Created image is a square, the length of it side is even and strictly positive.
   - `hduName` is prefixed by "modified-".
 
-## Input form
+### Input form
 
-### Start Run
+#### Start Run
 
 - Goal: start a *run* with the current input form. Call the asynchronous action `End Run`
 - Description:
-  - Prepare the file corresponding to the Oifitsfile associated to the input form.
-  - Call the correct script (local, remote...) with the input file
-  - Give back the execution flow (the answer of the script will be handled by action `End Result`)
-- Trigger: button "Run", menu button "Processing > Run".
+  - Create the temporary file corresponding to the `OIFitsFile` associated to the input form.
+  - Call the algorithm (local or remote) and supply it with the temporary file.
+  - Give back the execution flow. This action is too slow to be synchronous. When the algorithm returns, it will call the action `End Result`.
+- Called by: button "Run", menu button "Processing > Run", action `Run More Iterations`.
 
-# What is an action ?
+## What is an action ?
 
 An action is a useful goal, a useful task that can be achieved by the software during its execution.
 
@@ -224,3 +229,6 @@ Some actions implies other actions. For example, the `End Run` action implies th
 Some actions are not directly available from the graphical interface and are solely called by other actions.
 - **Automatic**\
 Some actions are triggered more or else automatically by the OImaging software. For example OImaging tries to connect to the *SAMP* hub by the action *Register SAMP*.
+
+\
+<style>body { max-width: 1000px; } img { max-width: 100%; }</style>
