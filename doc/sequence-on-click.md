@@ -52,7 +52,7 @@ When you modify `IRModel` state, for example by calling one of its setter, you f
 4. Your code casts the event `IRMODEL_CHANGED`.
 5. The event `SOME_EVENT` is handled, and synchronously calls *update model*.
 6. The mechanism *update model* reads `"cat.png"` from Swing GUI image field state, and writes it to `IRModel.image` state.
-7. Your event `IRMODEL_CHANGED` is handled, and synchronously calls *sync UI*. However it is now pointless because `"dog.png"` has been lost. 
+7. Your event `IRMODEL_CHANGED` is handled, and synchronously calls *sync UI*. However it is now pointless because `"dog.png"` has been lost.
 
 Generally, make your handlers only call *update model* when some significant value update has occured.
 

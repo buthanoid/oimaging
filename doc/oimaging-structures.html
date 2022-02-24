@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>oimaging-structures</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="oimaging-structures">OImaging Structures</h1>
+<p>In this document we go through some of the most important Java structures used in OImaging. The goal is to be able to discuss OImaging development without needing to dive in the source code.</p>
+<p><img src="./svg/oimaging-structures.svg" /></p>
+<h2 id="fitsimagehdu">FitsImageHDU</h2>
+<p>In a lot of cases it is correct to call this structure “an image”.</p>
+<p>A <code>FitsImageHDU</code> is a <em>Fits HDU</em> with <em>Header</em> and <em>Data</em> sections, with <em>image extension</em> (see <a href="https://archive.stsci.edu/fits/users_guide/node41.html#SECTION00550000000000000000">Fits guide</a>).</p>
+<p>It contains a list of <code>FitsImage</code>. This list often has only one element, that is why we call <code>FitsImageHDU</code> an “image”. See section <a href="#fitsimage"><code>FitsImage</code></a> for more information about these.</p>
+<p>It contains keywords, see section <a href="#fitshdu"><code>FitsHDU</code></a>, since <code>FitsImageHDU</code> herits from it. An example is the keyword <code>HDU_NAME</code>.</p>
+<p>Location: OiTools</p>
+<h2 id="fitshdu">FitsHDU</h2>
+<p>This structure contains keywords and header cards. The difference between these two is that keywords have a description, see class <code>KeywordMeta</code>.</p>
+<p>A keyword is identified by a <code>String</code> name. Its value can take one of the following types: <code>String</code>, <code>Double</code>, <code>Integer</code>, <code>Boolean</code>.</p>
+<p>A header card has a <code>String</code> name and a <code>String</code> value. In practice the <code>String</code> value can be parsed as another type, but then you are supposed to declare it as a keyword.</p>
+<p>Location: OiTools</p>
+<h2 id="fitsimage">FitsImage</h2>
+<p>Contains the data of an image, by a two dimensions array of type float (4 octets).</p>
+<p>Contains the meta-data of the image, by several fields, for example <code>incCol</code>, of type <code>double</code>, which stores the absolute coordinate increment along the column axis, in the metric radians by pixel.</p>
+<p>You should note that this meta-data contains duplicate information with the keywords of the parent <code>FitsImageHDU</code>. For example, the keyword <code>CRPIX1</code> and the field <code>pixRefCol</code> must always be equals.</p>
+<p>A <code>FitsImage</code> always belong to exactly one <code>FitsImageHDU</code>.</p>
+<p>Location: OiTools</p>
+<style>body { max-width: 1000px; } img { max-width: 100%; }</style>
+</body>
+</html>

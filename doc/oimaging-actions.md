@@ -10,7 +10,7 @@ Non-strictly grouped by theme:
 
 - [`Load OIFitsFile`](#load-oifitsfile): load an OIFits file from disk and fill the input form with it
 - [`Load FitsImageFile`](#load-fitsimagefile): load a Fits file from disk and add call `Add Image` for each image
-- [`Load Result`](#load-result): load an OIFits file and add it to the result table [DevMode restricted]
+- [`Load Result`](#load-result): load an OIFits file and calls action `Add Result` [DevMode restricted]
 
 ### File saving to disk
 
@@ -44,7 +44,7 @@ See also the `Load FitsImageFile` action.
 - `Select Vis`: enable *visibilities*
 - `Select software`: select a reconstruction software among the list of software
 - `Software Help`: display basic help about selected software
-- `Select Init Image`: select initial image among the image library
+- [`Select Init Image`](#select-init-image): select initial image among the image library
 - `Select Regul Image`: select regulation image among the image library
 - `Set Manual Options`: set manual options for the software
 
@@ -52,6 +52,7 @@ This list is not exhaustive as the software parameters are somewhat dynamic. It 
 
 ### Results table
 
+- [`Add Result`](#add-result): adds a result to the results table. [internal]
 - `Select Result`: select a result (line) in the table
 - `Select Several Results`: select several results (lines) in the table
 - `Edit Cell`: edit the value of an editable cell
@@ -59,9 +60,9 @@ This list is not exhaustive as the software parameters are somewhat dynamic. It 
 - `Delete Result`: delete the selected result(s)
 - `Compare Results`: display the *grid view* with several selected results
 - `Select Columns`: select the columns to display (and set their order), and the columns to hide
-- `Run more iterations`: call `Load OIFitsFile` with the selected result, then call `Start Run`, all this while staying on the *Results tab*
-- `Load as input`: call `Load OIFitsFile` with the selected result, and move to the *Input tab*
-- `Load as input with last img`: same as `Load as input`, but the final image is used for the init image in the input form
+- [`Run more iterations`](#run-more-iterations): call `Load OIFitsFile` with the selected result, then call `Start Run`, all this while staying on the *Results tab*
+- [`Load result as input`](#load-result-as-input): call `Load OIFitsFile` with the selected result, and move to the *Input tab*
+- [`Load result as input with last img`](#load-result-as-input-with-last-img): same as `Load result as input`, but the final image is used for the init image in the input form
 
 ### Viewer Panels
 
@@ -81,7 +82,7 @@ See also `Modify Image`.
 
 ### General
 
-- `End Run`: add the run's result to the table of results, and prepare the input form for the next run
+- [`End Run`](#end-result): adds the run's result to the table of results [internal]
 - `Reset`: clear all data and reset interface
 - `Quit`: quit OImaging
 - `Preferences`: display and edit OImaging preferences
@@ -127,7 +128,7 @@ Same list as above, with more informative content for each action.
 - Goal: load an OIFits file and add it to the result table.
 - Description:
   - Rebuilds a complete `ServiceResult` object from the `OIFits` file
-  - Calls the action `End Result`.
+  - Calls the action `Add Result`.
 - Called by: the *dev mode* loads all `OIFits` files from `~/.jmmc-/devmode/`. This action is unreachable from the interface.
 
 ### File saving to disk
@@ -162,11 +163,12 @@ Same list as above, with more informative content for each action.
   - `null` or `NULL_IMAGE_HDU` cannot be added to the image library
   - a `FitsImageHDU` with no images cannot be added to the image library
   - if you don't want your `FitsImageHDU` to have its `HDU_NAME` modified, you should use a copy of it
+  - this action cannot be called directly by the GUI user, it can only be by means of other actions.
 
 #### Remove Image
 
 - Goal: remove an image from the library
-- Called by: button "-" in input form. 
+- Called by: button "-" in input form.
 - Notes: Unselect initial and regulation images that were using the removed image.
 
 #### Create Image
@@ -202,6 +204,80 @@ Same list as above, with more informative content for each action.
   - Call the algorithm (local or remote) and supply it with the temporary file.
   - Give back the execution flow. This action is too slow to be synchronous. When the algorithm returns, it will call the action `End Result`.
 - Called by: button "Run", menu button "Processing > Run", action `Run More Iterations`.
+- Source code: `RunAction.actionPerformed`, `RunFitActionWorker.computeInBackground`.
+
+#### Select Init Image
+
+- Goal: to select initial image among the image library.
+- Description:
+  - Sets the `INIT_IMG` input param to the hdu name of the `FitsImageHDU` selected, in the `OIFitsFile` associated to the input form.
+  - Adds the `FitsImageHDU` to the `OIFitsFile`.
+  - Removes any `FitsImageHDU` in the `OIFitsFile` that is not targeted by the `INIT_IMG` keyword or `RGL_PRIO`.
+  - Sets the focus on the initial image.
+- Called by: selection list of initial image in the input form, actions `Load OIFitsFile`, `Load FitsImageFile`, `Create Image`, `Modify Image`, `Remove Image`, `Load result as input`, `Load result as input with last img`, `Set as init img`,
+- Notes:
+  - There is a special "null" HDU named `"[No Image]"`. It can be selected but it is only valid if the algorithm selected supports missing initial image. This HDU sets the `INIT_IMG` param to an empty string.
+- Source code: `SoftwareSettingsPanel.updateModel`, `IRModel.setSelectedInputImageHDU`, `IRModel.updateOifitsFileHDUs`.
+
+### Results table
+
+#### Add Result
+
+- Goal: adds a result to the results table.
+- Description:
+  - Parses the result if not done yet
+  - Adds the result to the table
+  - Adds some eventually missing OImaging keywords
+  - Calls `Add Image` for each image in the results
+- Called by: actions `End Result`, `Load Result`. Unreachable directly by the GUI.
+- Notes:
+  - Updates the parameters `INIT_IMG` and `RGL_PRIO` of the result in case one of its image has been renamed when added to the image library.
+
+#### Run more iterations
+
+- Goal: call `Load OIFitsFile` with the selected result, then call `Start Run`, all this while staying on the *Results tab*
+- Description:
+  - Calls action `Load result as input with last img`.
+  - Calls asynchronously `Start Run` action (by the `RUN` event).
+  - In summary, this actions permits to "continue" the selected result for more iterations.
+- Called by: button "Run more iterations" in the action panel in the results tab.
+- Notes:
+  - Automatic tab switch usually triggered by the modification of the input form is manually disabled to keep the GUI on the results tab.
+  - Only works if there is exactly one selected valid result.
+
+#### Load result as input
+
+- Goal: call `Load OIFitsFile` with the selected result, and move to the *Input tab*.
+- Description:
+  - Copies the `OIFitsFile` associated to the selected result.
+  - Calls `Load OIFitsFile` with this `OIFitsFile`.
+  - Switchs to input form tab.
+Called by: button "Load result as input"
+- Notes:
+  - Only works if there is exactly one selected valid result.
+
+#### Load result as input with last img
+
+  - Goal: same as `Load result as input`, but the final image is used for the init image in the input form.
+  - Description:
+    - Copies the `OIFitsFile` associated to the selected result.
+    - Calls `Load OIFitsFile` with this `OIFitsFile`.
+    - Calls `Select Init Image` with the result image found in the `OIFitsFile`.
+    - Switchs to input form tab.
+  Called by: button "Load result as input", action `Run more iterations`.
+  - Notes:
+    - Only works if there is exactly one selected valid result.
+
+### General
+
+#### End Result
+
+- Goal: adds the run's result to the table of results.
+- Description:
+  - Calls `Add Result` with the result.
+  - Sets `running` state to `false`.
+- Called by: Asynchronously by `Start Run`, it is triggered when the algorithm execution has completed.
+- Source code: `RunFitActionWorker.refreshUI`.
 
 ## What is an action ?
 

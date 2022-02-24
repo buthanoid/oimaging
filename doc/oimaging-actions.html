@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>oimaging-actions</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="actions-in-oimaging">Actions in OImaging</h1>
+<p>This page lists all the actions that are available in OImaging. A one-line list, then a detailed list. There is also explanations about what is an <em>action</em> in the third section of the present document.</p>
+<h2 id="list-of-actions">List of actions</h2>
+<p>Non-strictly grouped by theme:</p>
+<h3 id="file-loading-from-disk">File loading from disk</h3>
+<ul>
+<li><a href="#load-oifitsfile"><code>Load OIFitsFile</code></a>: load an OIFits file from disk and fill the input form with it</li>
+<li><a href="#load-fitsimagefile"><code>Load FitsImageFile</code></a>: load a Fits file from disk and add call <code>Add Image</code> for each image</li>
+<li><a href="#load-result"><code>Load Result</code></a>: load an OIFits file and calls action <code>Add Result</code> [DevMode restricted]</li>
+</ul>
+<h3 id="file-saving-to-disk">File saving to disk</h3>
+<ul>
+<li><a href="#save-oifitsfile"><code>Save OIFitsFile</code></a>: save an OIFits file (from a result or from the input form) to the disc memory</li>
+<li><a href="#save-fitsimagefile"><code>Save FitsImageFile</code></a>: save an image (from input form or from result) in a Fits file to the disc memory</li>
+</ul>
+<h3 id="samp-communication">SAMP communication</h3>
+<ul>
+<li><code>Register SAMP</code>: register to the <em>SAMP hub</em></li>
+<li><code>SAMP Status:</code>: display <em>SAMP hub</em> status</li>
+<li><code>Send OIFitsFile</code>: send an OIFits file by <em>SAMP</em></li>
+<li><code>Send FitsImageFile</code>: send a Fits file by <em>SAMP</em></li>
+<li><code>Receive OIFitsFile</code>: receive an OIFits file by <em>SAMP</em> and call <code>Load OIFitsFile</code></li>
+<li><code>Receive FitsImageFile</code>: receive a Fits file by <em>SAMP</em> and call <code>Load FitsImageFile</code></li>
+</ul>
+<h3 id="images-and-image-library">Images and Image Library</h3>
+<ul>
+<li><a href="#add-image"><code>Add Image</code></a>: add an image to the library, respecting the no duplicates rule, and gives back an equivalent image from library [internal]</li>
+<li><a href="#remove-image"><code>Remove Image</code></a>: remove an image from the library</li>
+<li><a href="#create-image"><code>Create Image</code></a>: create a gaussian image and add call <code>Add Image</code></li>
+<li><a href="#modify-image"><code>Modify Image</code></a>: modify <em>FOV</em> and <em>scale</em> of an image (from a result or from library) and call <code>Add Image</code></li>
+</ul>
+<p>See also the <code>Load FitsImageFile</code> action.</p>
+<h3 id="input-form">Input form</h3>
+<ul>
+<li><a href="#start-run"><code>Start Run</code></a>: start a <em>run</em> with the current input form. Call the asynchronous action <code>End Run</code></li>
+<li><code>Select Target</code>: select a target among the list of targets</li>
+<li><code>Select Min Wave</code>: set effective minimum wavelength</li>
+<li><code>Select Max Wave</code>: set effective maximum wavelength</li>
+<li><code>Select Vis</code>: enable <em>visibilities</em></li>
+<li><code>Select software</code>: select a reconstruction software among the list of software</li>
+<li><code>Software Help</code>: display basic help about selected software</li>
+<li><a href="#select-init-image"><code>Select Init Image</code></a>: select initial image among the image library</li>
+<li><code>Select Regul Image</code>: select regulation image among the image library</li>
+<li><code>Set Manual Options</code>: set manual options for the software</li>
+</ul>
+<p>This list is not exhaustive as the software parameters are somewhat dynamic. It always consists of some buttons, list of selections, text input…</p>
+<h3 id="results-table">Results table</h3>
+<ul>
+<li><a href="#add-result"><code>Add Result</code></a>: adds a result to the results table. [internal]</li>
+<li><code>Select Result</code>: select a result (line) in the table</li>
+<li><code>Select Several Results</code>: select several results (lines) in the table</li>
+<li><code>Edit Cell</code>: edit the value of an editable cell</li>
+<li><code>Drag &amp; Drop Column</code>: move a column by drag &amp; drop</li>
+<li><code>Delete Result</code>: delete the selected result(s)</li>
+<li><code>Compare Results</code>: display the <em>grid view</em> with several selected results</li>
+<li><code>Select Columns</code>: select the columns to display (and set their order), and the columns to hide</li>
+<li><a href="#run-more-iterations"><code>Run more iterations</code></a>: call <code>Load OIFitsFile</code> with the selected result, then call <code>Start Run</code>, all this while staying on the <em>Results tab</em></li>
+<li><a href="#load-result-as-input"><code>Load result as input</code></a>: call <code>Load OIFitsFile</code> with the selected result, and move to the <em>Input tab</em></li>
+<li><a href="#load-result-as-input-with-last-img"><code>Load result as input with last img</code></a>: same as <code>Load result as input</code>, but the final image is used for the init image in the input form</li>
+</ul>
+<h3 id="viewer-panels">Viewer Panels</h3>
+<ul>
+<li><code>Display Image</code>: display the image view of the currently selected OIFitsFile</li>
+<li><code>Display OIfits</code>: display the oifits data of the currently selected OIFitsFile</li>
+<li><code>Display Parameters</code>: display parameters of the currently selected OIFitsFile</li>
+<li><code>Display Execution Log</code>: display execution log of the currently selected OIFitsFile</li>
+<li><code>Select Displayed Image</code>: select the image to display among the images of the currently selected OIFitsFile</li>
+<li><code>Zoom Image</code>: zoom or dezoom the currently displayed image</li>
+<li><code>Select LUT Table</code>: select <em>LUT table</em></li>
+<li><code>Select Color Scale</code>: select <em>color scale</em></li>
+<li><code>Display Keywords</code>: display the keywords associated to the currently displayed image</li>
+<li><code>Ruler</code>: draw a ruler on the image and display computed length</li>
+<li><code>Set as init img</code>: set the currently displayed image as init image in the input form, then move to <em>Input tab</em></li>
+</ul>
+<p>See also <code>Modify Image</code>.</p>
+<h3 id="general">General</h3>
+<ul>
+<li><a href="#end-result"><code>End Run</code></a>: adds the run’s result to the table of results [internal]</li>
+<li><code>Reset</code>: clear all data and reset interface</li>
+<li><code>Quit</code>: quit OImaging</li>
+<li><code>Preferences</code>: display and edit OImaging preferences</li>
+<li><code>Copyrights</code>: display copyrights</li>
+<li><code>Feedback</code>: send feedback</li>
+<li><code>Log Console</code>: display and tune log console</li>
+<li><code>Release Notes</code>: display release notes</li>
+<li><code>About</code>: display general information</li>
+</ul>
+<h2 id="detailed-list-of-actions">Detailed list of actions</h2>
+<p>Same list as above, with more informative content for each action.</p>
+<h3 id="file-loading-from-disk-1">File loading from disk</h3>
+<h4 id="load-oifitsfile">Load OIFitsFile</h4>
+<ul>
+<li>Goal: load an OIFits file from disk and fill the input form with it.</li>
+<li>Description:
+<ul>
+<li>Creates a Java <code>OIFitsFile</code> object from the data found in the file.</li>
+<li>Sets the created <code>OIFitsFile</code> as the <code>OIFitsFile</code> associated to the input form.</li>
+<li>Calls <code>Add Image</code> action for every image in the <code>OIFitsFile</code>.</li>
+<li>Makes the input form widgets agree with the associated OIFits file</li>
+<li>The output params are deleted.</li>
+<li>The view is focused on the initial image of the input form.</li>
+</ul></li>
+<li>Called by: button “Load an OIFits file”, menu button “File &gt; Load OIFits file”, action <code>Receive OIFitsFile</code>, action <code>Run More Iterations</code>, action <code>Load as Input</code>, action <code>Load as input with last img</code>.</li>
+<li>Notes:
+<ul>
+<li>Only the images pointed to by parameters <code>INIT_IMG</code> and <code>RGL_PRIO</code> are kept in the <code>OIFits</code> file.</li>
+<li>May modify slightly the images. Indeed, the selected initial image in the <code>OIFitsFile</code> must also belong to the image library. However the image library refuses to contain two equivalents images. Thus, when loading the <code>OIFitsFile</code>, it there was already an equivalent image in the library, this latter image will replace the one in the <code>OIFitsFile</code>. This can also update the <code>INIT_IMG</code> input parameter, to reflect the potential update of <code>HDU_NAME</code>.</li>
+<li>It is normal, if we select an initial image, and then execute the present action, to observe that our initial image has been set to <code>null</code>. Because this action makes the input form agree with the loaded <code>OIFitsFile</code>, if the latter has <code>INIT_IMG</code> parameter set to <code>null</code>, so must be our initial image.</li>
+</ul></li>
+</ul>
+<h4 id="load-fitsimagefile">Load FitsImageFile</h4>
+<ul>
+<li>Goal: load a Fits file from disk and add call <code>Add Image</code> for each image.</li>
+<li>Description:
+<ul>
+<li>Creates a Java <code>FitsImageFile</code> object from the data found in the file.</li>
+<li>Adds every image from the <code>OIFits</code> file to the image library</li>
+<li>Sets the first image as initial image in the input form</li>
+</ul></li>
+<li>Called by: button “Load a Fits Image file”, menu button “File &gt; Load Fits Image file”, action <code>Receive FitsImageFile</code>.</li>
+</ul>
+<h4 id="load-result">Load Result</h4>
+<ul>
+<li>Goal: load an OIFits file and add it to the result table.</li>
+<li>Description:
+<ul>
+<li>Rebuilds a complete <code>ServiceResult</code> object from the <code>OIFits</code> file</li>
+<li>Calls the action <code>Add Result</code>.</li>
+</ul></li>
+<li>Called by: the <em>dev mode</em> loads all <code>OIFits</code> files from <code>~/.jmmc-/devmode/</code>. This action is unreachable from the interface.</li>
+</ul>
+<h3 id="file-saving-to-disk-1">File saving to disk</h3>
+<h4 id="save-oifitsfile">Save OIFitsFile</h4>
+<ul>
+<li>Goal: save an OIFits file (from input form or from result) to the disc memory</li>
+<li>Description:
+<ul>
+<li>If the view is focused on input form, the input form’s associated <code>OIFitsFile</code> is the one saved. Else, if the view is focused on results, the <code>OIFits</code> file associated to the one selected result is saved. If several results or zero result are selected, this function refuses to apply.</li>
+</ul></li>
+<li>Called by: button “Save OIFits file”, and menu button “File &gt; Save OIFits file”.</li>
+</ul>
+<h4 id="save-fitsimagefile">Save FitsImageFile</h4>
+<ul>
+<li>Goal: save an image (from input form or from result) in a Fits file to the disc memory.</li>
+<li>Description:
+<ul>
+<li>Create a new FitsImageFile object.</li>
+<li>Add to it the FitsImageHDU associated to the currently displayed image.</li>
+<li>Save the FitsImageFile to a file.</li>
+</ul></li>
+<li>Called by: menu button “File &gt; Save Fits Image file”</li>
+</ul>
+<h3 id="images-and-image-library-1">Images and Image Library</h3>
+<h4 id="add-image">Add Image</h4>
+<ul>
+<li>Goal: add an image to the library, respecting the no duplicates rule, and gives back an equivalent image from library.</li>
+<li>Description:
+<ul>
+<li>The image is stored in a <code>FitsImageHDU</code> object</li>
+<li>It is checked that there is no existing equivalent <code>FitsImageHDU</code> in the image library. If there is one, the action just gives back this latter one. If there is none, the action returns the new <code>FitsImageHDU</code>. Equivalence is defined by the <code>MATCHER</code> function in <code>FitsImageHDU</code>.</li>
+<li>Unicity of <code>hduName</code> is enforced in the image library. A new added <code>FitsImageHDU</code> can then have its <code>hduName</code> renamed in place.</li>
+</ul></li>
+<li>Called by: actions <code>Load FitsImageFile</code>,<code>Load OIFitsFile</code>, <code>Create Image</code>, <code>Modify Image</code>.</li>
+<li>Notes:
+<ul>
+<li><code>null</code> or <code>NULL_IMAGE_HDU</code> cannot be added to the image library</li>
+<li>a <code>FitsImageHDU</code> with no images cannot be added to the image library</li>
+<li>if you don’t want your <code>FitsImageHDU</code> to have its <code>HDU_NAME</code> modified, you should use a copy of it</li>
+<li>this action cannot be called directly by the GUI user, it can only be by means of other actions.</li>
+</ul></li>
+</ul>
+<h4 id="remove-image">Remove Image</h4>
+<ul>
+<li>Goal: remove an image from the library</li>
+<li>Called by: button “-” in input form.</li>
+<li>Notes: Unselect initial and regulation images that were using the removed image.</li>
+</ul>
+<h4 id="create-image">Create Image</h4>
+<ul>
+<li>Goal: create a gaussian image and add call <code>Add Image</code></li>
+<li>Description:
+<ul>
+<li>User can specify <em>FOV</em> in mas, <em>increments</em> in mas, <em>FWHM</em> in mas, <code>hduName</code>. <em>Image size</em> in number of pixels is the quotient of the division <code>FOV / increments</code>. <em>Increments</em> are then adjusted to respect better the equation <code>FOV = increments * imageSize</code>.</li>
+<li>Creates image and calls <code>Add Image</code>.</li>
+<li>Interface focus on the created image.</li>
+</ul></li>
+<li>Called by: button “Create Image”, menu button “Processing &gt; Create Image”</li>
+<li>Notes:
+<ul>
+<li>Created image is a square, the length of it side is an integer, even and strictly positive.</li>
+</ul></li>
+</ul>
+<h4 id="modify-image">Modify Image</h4>
+<ul>
+<li>Goal: modify <em>FOV</em> and <em>scale</em> of an image (from a result or from library) and call <code>Add Image</code></li>
+<li>Description:
+<ul>
+<li>Modification is not in place: a new <code>FitsImageHDU</code> is created to store the modified image. The original <code>FitsImageHDU</code> and its image remain unmodified.</li>
+<li>User can modify <em>FOV</em> in mas, <em>increments</em> in mas. <em>Image size</em> in number of pixels is the quotient of the division <code>FOV / increments</code>. <em>FOV</em> and <em>increments</em> are adjusted to respect better the equation <code>FOV = increments * imageSize</code>.</li>
+<li>If initial and regulation image were pointing to the original <code>FitsImageHDU</code>, they are updated to point to the new modified one.</li>
+</ul></li>
+<li>Called by: button “Modify Image”, menu button “Processing &gt; Modify Image”.</li>
+<li>Notes:
+<ul>
+<li>Created image is a square, the length of it side is even and strictly positive.</li>
+<li><code>hduName</code> is prefixed by “modified-”.</li>
+</ul></li>
+</ul>
+<h3 id="input-form-1">Input form</h3>
+<h4 id="start-run">Start Run</h4>
+<ul>
+<li>Goal: start a <em>run</em> with the current input form. Call the asynchronous action <code>End Run</code></li>
+<li>Description:
+<ul>
+<li>Create the temporary file corresponding to the <code>OIFitsFile</code> associated to the input form.</li>
+<li>Call the algorithm (local or remote) and supply it with the temporary file.</li>
+<li>Give back the execution flow. This action is too slow to be synchronous. When the algorithm returns, it will call the action <code>End Result</code>.</li>
+</ul></li>
+<li>Called by: button “Run”, menu button “Processing &gt; Run”, action <code>Run More Iterations</code>.</li>
+<li>Source code: <code>RunAction.actionPerformed</code>, <code>RunFitActionWorker.computeInBackground</code>.</li>
+</ul>
+<h4 id="select-init-image">Select Init Image</h4>
+<ul>
+<li>Goal: to select initial image among the image library.</li>
+<li>Description:
+<ul>
+<li>Sets the <code>INIT_IMG</code> input param to the hdu name of the <code>FitsImageHDU</code> selected, in the <code>OIFitsFile</code> associated to the input form.</li>
+<li>Adds the <code>FitsImageHDU</code> to the <code>OIFitsFile</code>.</li>
+<li>Removes any <code>FitsImageHDU</code> in the <code>OIFitsFile</code> that is not targeted by the <code>INIT_IMG</code> keyword or <code>RGL_PRIO</code>.</li>
+<li>Sets the focus on the initial image.</li>
+</ul></li>
+<li>Called by: selection list of initial image in the input form, actions <code>Load OIFitsFile</code>, <code>Load FitsImageFile</code>, <code>Create Image</code>, <code>Modify Image</code>, <code>Remove Image</code>, <code>Load result as input</code>, <code>Load result as input with last img</code>, <code>Set as init img</code>,</li>
+<li>Notes:
+<ul>
+<li>There is a special “null” HDU named <code>"[No Image]"</code>. It can be selected but it is only valid if the algorithm selected supports missing initial image. This HDU sets the <code>INIT_IMG</code> param to an empty string.</li>
+</ul></li>
+<li>Source code: <code>SoftwareSettingsPanel.updateModel</code>, <code>IRModel.setSelectedInputImageHDU</code>, <code>IRModel.updateOifitsFileHDUs</code>.</li>
+</ul>
+<h3 id="results-table-1">Results table</h3>
+<h4 id="add-result">Add Result</h4>
+<ul>
+<li>Goal: adds a result to the results table.</li>
+<li>Description:
+<ul>
+<li>Parses the result if not done yet</li>
+<li>Adds the result to the table</li>
+<li>Adds some eventually missing OImaging keywords</li>
+<li>Calls <code>Add Image</code> for each image in the results</li>
+</ul></li>
+<li>Called by: actions <code>End Result</code>, <code>Load Result</code>. Unreachable directly by the GUI.</li>
+<li>Notes:
+<ul>
+<li>Updates the parameters <code>INIT_IMG</code> and <code>RGL_PRIO</code> of the result in case one of its image has been renamed when added to the image library.</li>
+</ul></li>
+</ul>
+<h4 id="run-more-iterations">Run more iterations</h4>
+<ul>
+<li>Goal: call <code>Load OIFitsFile</code> with the selected result, then call <code>Start Run</code>, all this while staying on the <em>Results tab</em></li>
+<li>Description:
+<ul>
+<li>Calls action <code>Load result as input with last img</code>.</li>
+<li>Calls asynchronously <code>Start Run</code> action (by the <code>RUN</code> event).</li>
+<li>In summary, this actions permits to “continue” the selected result for more iterations.</li>
+</ul></li>
+<li>Called by: button “Run more iterations” in the action panel in the results tab.</li>
+<li>Notes:
+<ul>
+<li>Automatic tab switch usually triggered by the modification of the input form is manually disabled to keep the GUI on the results tab.</li>
+<li>Only works if there is exactly one selected valid result.</li>
+</ul></li>
+</ul>
+<h4 id="load-result-as-input">Load result as input</h4>
+<ul>
+<li>Goal: call <code>Load OIFitsFile</code> with the selected result, and move to the <em>Input tab</em>.</li>
+<li>Description:
+<ul>
+<li>Copies the <code>OIFitsFile</code> associated to the selected result.</li>
+<li>Calls <code>Load OIFitsFile</code> with this <code>OIFitsFile</code>.</li>
+<li>Switchs to input form tab. Called by: button “Load result as input”</li>
+</ul></li>
+<li>Notes:
+<ul>
+<li>Only works if there is exactly one selected valid result.</li>
+</ul></li>
+</ul>
+<h4 id="load-result-as-input-with-last-img">Load result as input with last img</h4>
+<ul>
+<li>Goal: same as <code>Load result as input</code>, but the final image is used for the init image in the input form.</li>
+<li>Description:
+<ul>
+<li>Copies the <code>OIFitsFile</code> associated to the selected result.</li>
+<li>Calls <code>Load OIFitsFile</code> with this <code>OIFitsFile</code>.</li>
+<li>Calls <code>Select Init Image</code> with the result image found in the <code>OIFitsFile</code>.</li>
+<li>Switchs to input form tab. Called by: button “Load result as input”, action <code>Run more iterations</code>.</li>
+</ul></li>
+<li>Notes:
+<ul>
+<li>Only works if there is exactly one selected valid result.</li>
+</ul></li>
+</ul>
+<h3 id="general-1">General</h3>
+<h4 id="end-result">End Result</h4>
+<ul>
+<li>Goal: adds the run’s result to the table of results.</li>
+<li>Description:
+<ul>
+<li>Calls <code>Add Result</code> with the result.</li>
+<li>Sets <code>running</code> state to <code>false</code>.</li>
+</ul></li>
+<li>Called by: Asynchronously by <code>Start Run</code>, it is triggered when the algorithm execution has completed.</li>
+<li>Source code: <code>RunFitActionWorker.refreshUI</code>.</li>
+</ul>
+<h2 id="what-is-an-action">What is an action ?</h2>
+<p>An action is a useful goal, a useful task that can be achieved by the software during its execution.</p>
+<p>It consists of a summary goal, a detailed scenario of its steps, with eventual branches, failures, pre and post conditions, the source that triggered or called it.</p>
+<p>It can be low-level enough to be realized by a single function in the source code, but it can also span over several functions. It goes the same for the GUI : the action can be fully realized by a single click on a button, or it can imply several interactions with the user, for example such as a dialog with an input text field and a validation button.<br />
+However an action should not be too high-level, as a limit example “Use OImaging” is the most high-level possible action, and it is too broad too be relevant. The high-level tasks that span over a large sequence of actions will be described in the form of “scenarios of usage”. For example “Reconstruct an image” is one relevant scenario of usage that implies a sequence of actions in OImaging.</p>
+<h2 id="sources-of-actions">Sources of actions</h2>
+<p>The source of the action is the entity that called the action.</p>
+<ul>
+<li><strong>User &amp; graphical user interface</strong><br />
+This is the most common source of action. Typically the user clicks on a button, for example the “Create Image” button. Almost every widget use leads to an OImaging action, for example drag &amp; drop a column in the <em>results table</em> triggers an action.</li>
+<li><strong>End of an asynchronous action</strong><br />
+Some actions take a long time, for example the <code>Start Run</code> action asks a computation on a distant server.<br />
+These actions are split in two parts: the <em>start</em> part and the <em>end</em> part. The split reflects better the behaviour of the program, and also reflects the fact that the user can trigger other actions between <em>start</em> and <em>end</em>.<br />
+A good example of an end of an asynchronous action is the <code>End Run</code> action. It is triggered when the server answers with a final reconstructed image that is going to be displayed in the interface.</li>
+<li><strong>SAMP &amp; other JMMC softwares</strong><br />
+<em>JMMC</em> softwares are able to communicate by the <em>SAMP</em> system. For example the user can trigger an action on another <em>JMMC</em> software that will send an image to OImaging by <em>SAMP</em>, this will trigger an OImaging action.</li>
+<li><strong>Composite actions</strong><br />
+Some actions implies other actions. For example, the <code>End Run</code> action implies the <code>Add result</code> action to add the result to the table, and the <code>Select input image</code> to set the new initial image in the input form.<br />
+Some actions are not directly available from the graphical interface and are solely called by other actions.</li>
+<li><strong>Automatic</strong><br />
+Some actions are triggered more or else automatically by the OImaging software. For example OImaging tries to connect to the <em>SAMP</em> hub by the action <em>Register SAMP</em>.</li>
+</ul>
+<br />
+
+<style>body { max-width: 1000px; } img { max-width: 100%; }</style>
+</body>
+</html>

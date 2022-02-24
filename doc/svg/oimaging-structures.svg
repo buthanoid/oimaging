@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="27cm" height="14cm" viewBox="498 198 537 275" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="Arrière-plan">
+    <g>
+      <rect style="fill: #ff9ea8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="600" y="400" width="225.6" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="712.8" y="418.852">FitsImageHDU</text>
+      <rect style="fill: #ff9ea8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="600" y="428" width="225.6" height="20"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="603.5" y="441.881">-fitsImages: List&lt;FitsImage&gt;</text>
+      <rect style="fill: #ff9ea8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="600" y="448" width="225.6" height="8"/>
+    </g>
+    <g>
+      <rect style="fill: #ff9ea8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="500" y="200" width="310.3" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:italic;font-weight:700" x="655.15" y="218.852">FitsHDU</text>
+      <rect style="fill: #ff9ea8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="500" y="228" width="310.3" height="36"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="503.5" y="241.881">-keywordsValue: HashMap&lt;String,Object&gt;</text>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="503.5" y="257.881">-headerCards: ArrayList&lt;FitsHeaderCard&gt;</text>
+      <rect style="fill: #ff9ea8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="500" y="264" width="310.3" height="8"/>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="655.15,291.745 655.15,344.001 712.8,344.001 712.8,398.493 "/>
+      <polygon style="fill: #ffffff; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="663.15,291.745 655.15,275.745 647.15,291.745 "/>
+    </g>
+    <g>
+      <rect style="fill: #ff9ea8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="900" y="400" width="133.2" height="28"/>
+      <text font-size="16" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="966.6" y="418.852">FitsImage</text>
+      <rect style="fill: #ff9ea8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="900" y="428" width="133.2" height="36"/>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="903.5" y="441.881">-data: float[][]</text>
+      <text font-size="12.8" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="903.5" y="457.881">-incCol: double</text>
+      <rect style="fill: #ff9ea8; fill-opacity: 1; stroke-opacity: 1; stroke-width: 3; stroke: #000000" x="900" y="464" width="133.2" height="8"/>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="852.279,428 869.799,428 869.799,436 898.492,436 "/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="827.107,428 841.107,423.2 855.107,428 841.107,432.8 "/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="859.107" y="424.981"/>
+      <text font-size="12.7998" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="894.492" y="432.981">*</text>
+    </g>
+  </g>
+</svg>
