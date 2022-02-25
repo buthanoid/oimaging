@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>oitools-oitable</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="oitools-oitable">OiTools OiTable</h1>
+<p><img src="./svg/oitools-oitable.svg" /></p>
+<p>The <code>FitsHDU</code> contains the keywords.</p>
+<p>The <code>FitsTable</code> (also abstract) contains the descriptions of the columns of a <a href="https://archive.stsci.edu/fits/users_guide/node44.html#SECTION00560000000000000000">Fits binary table</a>.</p>
+<p>The <code>OITable</code> references the parent <code>OIFitsFile</code>. Indeed an <code>OITable</code> belongs to exactly one <code>OIFitsFile</code>, and an <code>OIFitsFile</code> contains several <code>OITable</code>.</p>
+<p>The <code>OICorr</code>, <code>OIWavelength</code>, <code>OIArray</code>, and <code>OITarget</code> are concrete final classes containing the different binary tables in OI. Each one define its own keywords.</p>
+</body>
+</html>

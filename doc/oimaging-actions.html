@@ -14,7 +14,8 @@
 </head>
 <body>
 <h1 id="actions-in-oimaging">Actions in OImaging</h1>
-<p>This page lists all the actions that are available in OImaging. A one-line list, then a detailed list. There is also explanations about what is an <em>action</em> in the third section of the present document.</p>
+<p>This page lists all the actions that are available in OImaging. A one-line list, then a <a href="#detailed-list-of-actions">detailed list</a>. There is also explanations about what is an <em>action</em> in the third section of the present document.</p>
+<p>Anytime you plan to add, remove or modify a functionality of OImaging, you can use this list to see if your update fits well and preserves consistency.</p>
 <h2 id="list-of-actions">List of actions</h2>
 <p>Non-strictly grouped by theme:</p>
 <h3 id="file-loading-from-disk">File loading from disk</h3>
@@ -55,7 +56,7 @@
 <li><code>Select software</code>: select a reconstruction software among the list of software</li>
 <li><code>Software Help</code>: display basic help about selected software</li>
 <li><a href="#select-init-image"><code>Select Init Image</code></a>: select initial image among the image library</li>
-<li><code>Select Regul Image</code>: select regulation image among the image library</li>
+<li><a href="#select-regul-image"><code>Select Regul Image</code></a>: select regulation image among the image library</li>
 <li><code>Set Manual Options</code>: set manual options for the software</li>
 </ul>
 <p>This list is not exhaustive as the software parameters are somewhat dynamic. It always consists of some buttons, list of selections, text input…</p>
@@ -85,13 +86,13 @@
 <li><code>Select Color Scale</code>: select <em>color scale</em></li>
 <li><code>Display Keywords</code>: display the keywords associated to the currently displayed image</li>
 <li><code>Ruler</code>: draw a ruler on the image and display computed length</li>
-<li><code>Set as init img</code>: set the currently displayed image as init image in the input form, then move to <em>Input tab</em></li>
+<li><a href="#set-as-init-img"><code>Set as init img</code></a>: set the currently displayed image as init image in the input form, then move to <em>Input tab</em></li>
 </ul>
 <p>See also <code>Modify Image</code>.</p>
 <h3 id="general">General</h3>
 <ul>
 <li><a href="#end-result"><code>End Run</code></a>: adds the run’s result to the table of results [internal]</li>
-<li><code>Reset</code>: clear all data and reset interface</li>
+<li><a href="#reset"><code>Reset</code></a>: clear all data and reset interface</li>
 <li><code>Quit</code>: quit OImaging</li>
 <li><code>Preferences</code>: display and edit OImaging preferences</li>
 <li><code>Copyrights</code>: display copyrights</li>
@@ -241,15 +242,35 @@
 <ul>
 <li>Sets the <code>INIT_IMG</code> input param to the hdu name of the <code>FitsImageHDU</code> selected, in the <code>OIFitsFile</code> associated to the input form.</li>
 <li>Adds the <code>FitsImageHDU</code> to the <code>OIFitsFile</code>.</li>
-<li>Removes any <code>FitsImageHDU</code> in the <code>OIFitsFile</code> that is not targeted by the <code>INIT_IMG</code> keyword or <code>RGL_PRIO</code>.</li>
-<li>Sets the focus on the initial image.</li>
+<li>Removes any <code>FitsImageHDU</code> from the <code>OIFitsFile</code> that is not targeted by the <code>INIT_IMG</code> keyword or <code>RGL_PRIO</code>.</li>
 </ul></li>
-<li>Called by: selection list of initial image in the input form, actions <code>Load OIFitsFile</code>, <code>Load FitsImageFile</code>, <code>Create Image</code>, <code>Modify Image</code>, <code>Remove Image</code>, <code>Load result as input</code>, <code>Load result as input with last img</code>, <code>Set as init img</code>,</li>
+<li>Called by: selection list of initial image in the input form, actions <code>Load OIFitsFile</code>, <code>Load FitsImageFile</code>, <code>Create Image</code>, <code>Modify Image</code>, <code>Remove Image</code>, <code>Load result as input</code>, <code>Load result as input with last img</code>, <code>Set as init img</code>.</li>
 <li>Notes:
 <ul>
+<li>If it was called from the selection, list, it sets the focus on the initial image.</li>
 <li>There is a special “null” HDU named <code>"[No Image]"</code>. It can be selected but it is only valid if the algorithm selected supports missing initial image. This HDU sets the <code>INIT_IMG</code> param to an empty string.</li>
 </ul></li>
-<li>Source code: <code>SoftwareSettingsPanel.updateModel</code>, <code>IRModel.setSelectedInputImageHDU</code>, <code>IRModel.updateOifitsFileHDUs</code>.</li>
+<li>Source code: <code>IRModel.setSelectedInputImageHDU</code>, <code>SoftwareSettingsPanel.updateModel</code>, <code>IRModel.updateOifitsFileHDUs</code>.</li>
+</ul>
+<h4 id="select-regul-image">Select Regul Image</h4>
+<ul>
+<li>Goal: to select regulation image among the image library.</li>
+<li>Description:
+<ul>
+<li>Sets the <code>RGL_PRIO</code> input param to the hdu name of the <code>FitsImageHDU</code> selected, in the <code>OIFitsFile</code> associated to the input form.</li>
+<li>Adds the <code>FitsImageHDU</code> to the <code>OIFitsFile</code>.</li>
+<li>Removes any <code>FitsImageHDU</code> from the <code>OIFitsFile</code> that is not targeted by the <code>INIT_IMG</code> keyword or <code>RGL_PRIO</code>.</li>
+</ul></li>
+<li>Called by:
+<ul>
+<li>selection list of regulation image in the input form, actions <code>Create Image</code>, <code>Modify Image</code>, <code>Remove Image</code>, <code>Load OIFitsFile</code>.</li>
+</ul></li>
+<li>Notes:
+<ul>
+<li>If it was called from the selection, list, it sets the focus on the regulation image.</li>
+<li>There is a special “null” HDU named <code>"[No Image]"</code>. It can be selected but it is only valid if the algorithm selected supports missing initial image. This HDU sets the <code>INIT_IMG</code> param to an empty string.</li>
+</ul></li>
+<li>Source code: <code>IRModel.setSelectedRglPrioImageHdu</code>, <code>SoftwareSettingsPanel.updateModel</code>, <code>IRModel.updateOifitsFileHDUs</code>.</li>
 </ul>
 <h3 id="results-table-1">Results table</h3>
 <h4 id="add-result">Add Result</h4>
@@ -313,6 +334,25 @@
 <li>Only works if there is exactly one selected valid result.</li>
 </ul></li>
 </ul>
+<h3 id="viewer-panels-1">Viewer Panels</h3>
+<h4 id="set-as-init-img">Set as init img</h4>
+<ul>
+<li>Goal: sets the currently displayed image as init image in the input form, then moves to <em>Input tab</em></li>
+<li>Description:
+<ul>
+<li>Retrieves the currently displayed image, it depends on which tab is currently active: <em>input</em> or <em>results</em>.</li>
+<li>Calls <code>Add Image</code> with the image.</li>
+<li>Calls <code>Select as init img</code> with the image.</li>
+<li>Switches to <em>input</em> tab.</li>
+<li>Sets the focus on the initial image.</li>
+</ul></li>
+<li>Called by: <em>results</em> viewer panel button “Set as Init Img”.</li>
+<li>Notes:
+<ul>
+<li>there is no button for this action in the <em>input</em> tab’s viewer panel, as the selection list is already here to fulfill the goal.</li>
+</ul></li>
+<li>Source code: <code>SetAsInitImgAction</code>, <code>IRModel.setAsInitImg</code>.</li>
+</ul>
 <h3 id="general-1">General</h3>
 <h4 id="end-result">End Result</h4>
 <ul>
@@ -325,25 +365,40 @@
 <li>Called by: Asynchronously by <code>Start Run</code>, it is triggered when the algorithm execution has completed.</li>
 <li>Source code: <code>RunFitActionWorker.refreshUI</code>.</li>
 </ul>
+<h4 id="reset">Reset</h4>
+<ul>
+<li>Goal: clears all data and resets interface.</li>
+<li>Description:
+<ul>
+<li>Sets manual option to <code>null</code>.</li>
+<li>Sets focus to initial image.</li>
+<li>Sets selected initial and regulation images to <code>null</code>.</li>
+<li>Empties image library.</li>
+<li>Empties results table.</li>
+<li>Sets <code>running</code> state to false.</li>
+<li>Sets a basic initial <code>OIFitsFile</code> associated to the input form.</li>
+</ul></li>
+<li>Called by: OImaging startup, menu button “File &gt; New OI Image file”.</li>
+<li>Source code: <code>IRModel.reset</code>, <code>NewAction</code>.</li>
+</ul>
 <h2 id="what-is-an-action">What is an action ?</h2>
 <p>An action is a useful goal, a useful task that can be achieved by the software during its execution.</p>
-<p>It consists of a summary goal, a detailed scenario of its steps, with eventual branches, failures, pre and post conditions, the source that triggered or called it.</p>
+<p>It consists of a summary goal, a list of its steps, ordered or not, a list of the callers of the action, additional notes, and related source code.</p>
 <p>It can be low-level enough to be realized by a single function in the source code, but it can also span over several functions. It goes the same for the GUI : the action can be fully realized by a single click on a button, or it can imply several interactions with the user, for example such as a dialog with an input text field and a validation button.<br />
 However an action should not be too high-level, as a limit example “Use OImaging” is the most high-level possible action, and it is too broad too be relevant. The high-level tasks that span over a large sequence of actions will be described in the form of “scenarios of usage”. For example “Reconstruct an image” is one relevant scenario of usage that implies a sequence of actions in OImaging.</p>
-<h2 id="sources-of-actions">Sources of actions</h2>
-<p>The source of the action is the entity that called the action.</p>
+<h3 id="who-call-an-action">Who call an action ?</h3>
 <ul>
 <li><strong>User &amp; graphical user interface</strong><br />
 This is the most common source of action. Typically the user clicks on a button, for example the “Create Image” button. Almost every widget use leads to an OImaging action, for example drag &amp; drop a column in the <em>results table</em> triggers an action.</li>
 <li><strong>End of an asynchronous action</strong><br />
-Some actions take a long time, for example the <code>Start Run</code> action asks a computation on a distant server.<br />
+Some actions take a long time, for example the <code>Start Run</code> action asks a lengthy computation of an algorithm.<br />
 These actions are split in two parts: the <em>start</em> part and the <em>end</em> part. The split reflects better the behaviour of the program, and also reflects the fact that the user can trigger other actions between <em>start</em> and <em>end</em>.<br />
-A good example of an end of an asynchronous action is the <code>End Run</code> action. It is triggered when the server answers with a final reconstructed image that is going to be displayed in the interface.</li>
+A good example of an end of an asynchronous action is the <code>End Run</code> action. It is triggered when the algorithm answers with a final reconstructed image that is going to be displayed in the interface.</li>
 <li><strong>SAMP &amp; other JMMC softwares</strong><br />
 <em>JMMC</em> softwares are able to communicate by the <em>SAMP</em> system. For example the user can trigger an action on another <em>JMMC</em> software that will send an image to OImaging by <em>SAMP</em>, this will trigger an OImaging action.</li>
 <li><strong>Composite actions</strong><br />
-Some actions implies other actions. For example, the <code>End Run</code> action implies the <code>Add result</code> action to add the result to the table, and the <code>Select input image</code> to set the new initial image in the input form.<br />
-Some actions are not directly available from the graphical interface and are solely called by other actions.</li>
+Some actions implies other actions. For example, the <code>End Run</code> action implies the <code>Add Result</code> action to add the result to the table, and the <code>Select Init Image</code> to set the new initial image in the input form.<br />
+Some actions are not directly available from the graphical interface and are solely called by other actions, these are marked as “[internal]”.</li>
 <li><strong>Automatic</strong><br />
 Some actions are triggered more or else automatically by the OImaging software. For example OImaging tries to connect to the <em>SAMP</em> hub by the action <em>Register SAMP</em>.</li>
 </ul>

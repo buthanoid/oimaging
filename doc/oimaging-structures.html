@@ -14,7 +14,7 @@
 </head>
 <body>
 <h1 id="oimaging-structures">OImaging Structures</h1>
-<p>In this document we go through some of the most important Java structures used in OImaging. The goal is to be able to discuss OImaging development without needing to dive in the source code.</p>
+<p>In this document we go through some of the most important Java data structures used in OImaging. The goal is to be able to discuss OImaging development without needing to dive in the source code.</p>
 <p><img src="./svg/oimaging-structures.svg" /></p>
 <h2 id="fitsimagehdu">FitsImageHDU</h2>
 <p>In a lot of cases it is correct to call this structure “an image”.</p>
@@ -31,8 +31,58 @@
 <p>Contains the data of an image, by a two dimensions array of type float (4 octets).</p>
 <p>Contains the meta-data of the image, by several fields, for example <code>incCol</code>, of type <code>double</code>, which stores the absolute coordinate increment along the column axis, in the metric radians by pixel.</p>
 <p>You should note that this meta-data contains duplicate information with the keywords of the parent <code>FitsImageHDU</code>. For example, the keyword <code>CRPIX1</code> and the field <code>pixRefCol</code> must always be equals.</p>
-<p>A <code>FitsImage</code> always belong to exactly one <code>FitsImageHDU</code>.</p>
+<p>A <code>FitsImage</code> always belong to exactly one <code>FitsImageHDU</code>. The field <code>fitsImageHDU</code> references the parent <code>FitsImageHDU</code>.</p>
 <p>Location: OiTools</p>
+<h2 id="oifitsfile">OIFitsFile</h2>
+<p>An <code>OI Fits</code> file, but parsed as a Java Object.</p>
+<p>It does not have to be associated to an actual file on the disk, there is no mechanism of automatic synchronization. There is the class <code>OIFitsWriter</code> to parse an <code>OI Fits</code> file to an <code>OIFitsFile</code> object, and the class <code>OIFitsLoader</code> to export an <code>OIFitsFile</code> object to <code>OI Fits</code> file.</p>
+<p>The OIFitsFile contains:</p>
+<ul>
+<li>herited from <code>FitsImageFile</code>:
+<ul>
+<li>the list of <code>FitsImageHDU</code></li>
+</ul></li>
+<li>the input and output parameters</li>
+<li>the meta datas:
+<ul>
+<li>the targets</li>
+<li>the OI arrays</li>
+<li>the wavelengths</li>
+<li>the correlations</li>
+<li>the OI_INSPOL</li>
+</ul></li>
+<li>the datas:
+<ul>
+<li>the OIData</li>
+<li>the VIS</li>
+<li>the VIS2</li>
+<li>the T3</li>
+<li>the flux</li>
+</ul></li>
+</ul>
+<p>Location: OiTools</p>
+<h2 id="serviceresult">ServiceResult</h2>
+<p>A <code>ServiceResult</code> is a result of a computation.</p>
+<p>Consider that it is used in two different moments: before the computation takes places, and after the computation is completed.</p>
+<p>Before the computation, the <code>ServiceResult</code> is filled with three file paths:</p>
+<ul>
+<li>the path of the <em>input file</em>, which will be the <code>OI Fits</code> file given as input to the algorithm.</li>
+<li>the path of the <em>result file</em>, which will be the <code>OI Fits</code> file given as output by the algorithm.</li>
+<li>the path of the <em>execution log file</em>, which will contain the standard error output from the algorithm.</li>
+</ul>
+<p>The current time is also recorded as <code>startTime</code>.</p>
+<p>After the computation, when the <code>Add Result</code> action is called, the <em>result file</em> and <em>execution log file</em> are loaded from the disk and parsed in Java objects, references in the <code>ServiceResult</code> fields <code>oiFitsFile</code> and <code>executionLog</code>. The time is also recorded as <code>endTime</code>. The field <code>index</code> is filled.</p>
+<p>Location: OImaging</p>
+<h2 id="irmodel">IRModel</h2>
+<p>This in the principal model (data structure) of OImaging. We can almost call it the “state of OImaging”.</p>
+<p>Principaly, it contains:</p>
+<ul>
+<li>the <code>OIFitsFile</code> associated to the input form. When you click on Run, it will be written to a file and given to the algorithm.</li>
+<li>the “image library” which is a list of <code>FitsImageHDU</code> that the user can select for initial images and regulation images.</li>
+<li>the list of <code>ServiceResult</code>, the results of previous computations.</li>
+</ul>
+<p>You can also find some additional state, for example the <code>Boolean running</code> which tells if there is a current compilation. You have also some duplicated state like the <code>FitsImageHDU selectedInputImageHDU</code>. This information could be retrieved from the <code>OIFitsFile</code> associated to the input form, but it is practical as a shortcut.</p>
+<p>Location: OImaging</p>
 <style>body { max-width: 1000px; } img { max-width: 100%; }</style>
 </body>
 </html>

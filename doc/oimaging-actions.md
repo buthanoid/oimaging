@@ -1,6 +1,8 @@
 # Actions in OImaging
 
-This page lists all the actions that are available in OImaging. A one-line list, then a detailed list. There is also explanations about what is an *action* in the third section of the present document.
+This page lists all the actions that are available in OImaging. A one-line list, then a [detailed list](#detailed-list-of-actions). There is also explanations about what is an *action* in the third section of the present document.
+
+Anytime you plan to add, remove or modify a functionality of OImaging, you can use this list to see if your update fits well and preserves consistency.
 
 ## List of actions
 
@@ -45,7 +47,7 @@ See also the `Load FitsImageFile` action.
 - `Select software`: select a reconstruction software among the list of software
 - `Software Help`: display basic help about selected software
 - [`Select Init Image`](#select-init-image): select initial image among the image library
-- `Select Regul Image`: select regulation image among the image library
+- [`Select Regul Image`](#select-regul-image): select regulation image among the image library
 - `Set Manual Options`: set manual options for the software
 
 This list is not exhaustive as the software parameters are somewhat dynamic. It always consists of some buttons, list of selections, text input...
@@ -76,14 +78,14 @@ This list is not exhaustive as the software parameters are somewhat dynamic. It 
 - `Select Color Scale`: select *color scale*
 - `Display Keywords`: display the keywords associated to the currently displayed image
 - `Ruler`: draw a ruler on the image and display computed length
-- `Set as init img`: set the currently displayed image as init image in the input form, then move to *Input tab*
+- [`Set as init img`](#set-as-init-img): set the currently displayed image as init image in the input form, then move to *Input tab*
 
 See also `Modify Image`.
 
 ### General
 
 - [`End Run`](#end-result): adds the run's result to the table of results [internal]
-- `Reset`: clear all data and reset interface
+- [`Reset`](#reset): clear all data and reset interface
 - `Quit`: quit OImaging
 - `Preferences`: display and edit OImaging preferences
 - `Copyrights`: display copyrights
@@ -212,12 +214,26 @@ Same list as above, with more informative content for each action.
 - Description:
   - Sets the `INIT_IMG` input param to the hdu name of the `FitsImageHDU` selected, in the `OIFitsFile` associated to the input form.
   - Adds the `FitsImageHDU` to the `OIFitsFile`.
-  - Removes any `FitsImageHDU` in the `OIFitsFile` that is not targeted by the `INIT_IMG` keyword or `RGL_PRIO`.
-  - Sets the focus on the initial image.
-- Called by: selection list of initial image in the input form, actions `Load OIFitsFile`, `Load FitsImageFile`, `Create Image`, `Modify Image`, `Remove Image`, `Load result as input`, `Load result as input with last img`, `Set as init img`,
+  - Removes any `FitsImageHDU` from the `OIFitsFile` that is not targeted by the `INIT_IMG` keyword or `RGL_PRIO`.
+- Called by: selection list of initial image in the input form, actions `Load OIFitsFile`, `Load FitsImageFile`, `Create Image`, `Modify Image`, `Remove Image`, `Load result as input`, `Load result as input with last img`, `Set as init img`.
 - Notes:
+  - If it was called from the selection, list, it sets the focus on the initial image.
   - There is a special "null" HDU named `"[No Image]"`. It can be selected but it is only valid if the algorithm selected supports missing initial image. This HDU sets the `INIT_IMG` param to an empty string.
-- Source code: `SoftwareSettingsPanel.updateModel`, `IRModel.setSelectedInputImageHDU`, `IRModel.updateOifitsFileHDUs`.
+- Source code: `IRModel.setSelectedInputImageHDU`, `SoftwareSettingsPanel.updateModel`, `IRModel.updateOifitsFileHDUs`.
+
+#### Select Regul Image
+
+- Goal: to select regulation image among the image library.
+- Description:
+  - Sets the `RGL_PRIO` input param to the hdu name of the `FitsImageHDU` selected, in the `OIFitsFile` associated to the input form.
+  - Adds the `FitsImageHDU` to the `OIFitsFile`.
+  - Removes any `FitsImageHDU` from the `OIFitsFile` that is not targeted by the `INIT_IMG` keyword or `RGL_PRIO`.
+- Called by:
+  - selection list of regulation image in the input form, actions `Create Image`, `Modify Image`, `Remove Image`, `Load OIFitsFile`.
+- Notes:
+  - If it was called from the selection, list, it sets the focus on the regulation image.
+  - There is a special "null" HDU named `"[No Image]"`. It can be selected but it is only valid if the algorithm selected supports missing initial image. This HDU sets the `INIT_IMG` param to an empty string.
+- Source code: `IRModel.setSelectedRglPrioImageHdu`, `SoftwareSettingsPanel.updateModel`, `IRModel.updateOifitsFileHDUs`.
 
 ### Results table
 
@@ -268,6 +284,22 @@ Called by: button "Load result as input"
   - Notes:
     - Only works if there is exactly one selected valid result.
 
+### Viewer Panels
+
+#### Set as init img
+
+- Goal: sets the currently displayed image as init image in the input form, then moves to *Input tab*
+- Description:
+  - Retrieves the currently displayed image, it depends on which tab is currently active: *input* or *results*.
+  - Calls `Add Image` with the image.
+  - Calls `Select as init img` with the image.
+  - Switches to *input* tab.
+  - Sets the focus on the initial image.
+- Called by: *results* viewer panel button "Set as Init Img".
+- Notes:
+  - there is no button for this action in the *input* tab's viewer panel, as the selection list is already here to fulfill the goal.
+- Source code: `SetAsInitImgAction`, `IRModel.setAsInitImg`.
+
 ### General
 
 #### End Result
@@ -279,30 +311,42 @@ Called by: button "Load result as input"
 - Called by: Asynchronously by `Start Run`, it is triggered when the algorithm execution has completed.
 - Source code: `RunFitActionWorker.refreshUI`.
 
+#### Reset
+
+- Goal: clears all data and resets interface.
+- Description:
+  - Sets manual option to `null`.
+  - Sets focus to initial image.
+  - Sets selected initial and regulation images to `null`.
+  - Empties image library.
+  - Empties results table.
+  - Sets `running` state to false.
+  - Sets a basic initial `OIFitsFile` associated to the input form.
+- Called by: OImaging startup, menu button "File > New OI Image file".
+- Source code: `IRModel.reset`, `NewAction`.
+
 ## What is an action ?
 
 An action is a useful goal, a useful task that can be achieved by the software during its execution.
 
-It consists of a summary goal, a detailed scenario of its steps, with eventual branches, failures, pre and post conditions, the source that triggered or called it.
+It consists of a summary goal, a list of its steps, ordered or not, a list of the callers of the action, additional notes, and related source code.
 
 It can be low-level enough to be realized by a single function in the source code, but it can also span over several functions. It goes the same for the GUI : the action can be fully realized by a single click on a button, or it can imply several interactions with the user, for example such as a dialog with an input text field and a validation button.\
 However an action should not be too high-level, as a limit example "Use OImaging" is the most high-level possible action, and it is too broad too be relevant. The high-level tasks that span over a large sequence of actions will be described in the form of "scenarios of usage". For example "Reconstruct an image" is one relevant scenario of usage that implies a sequence of actions in OImaging.
 
-## Sources of actions
-
-The source of the action is the entity that called the action.
+### Who call an action ?
 
 - **User & graphical user interface**\
 This is the most common source of action. Typically the user clicks on a button, for example the "Create Image" button. Almost every widget use leads to an OImaging action, for example drag & drop a column in the *results table* triggers an action.
 - **End of an asynchronous action**\
-Some actions take a long time, for example the `Start Run` action asks a computation on a distant server. \
+Some actions take a long time, for example the `Start Run` action asks a lengthy computation of an algorithm. \
 These actions are split in two parts: the *start* part and the *end* part. The split reflects better the behaviour of the program, and also reflects the fact that the user can trigger other actions between *start* and *end*.\
-A good example of an end of an asynchronous action is the `End Run` action. It is triggered when the server answers with a final reconstructed image that is going to be displayed in the interface.
+A good example of an end of an asynchronous action is the `End Run` action. It is triggered when the algorithm answers with a final reconstructed image that is going to be displayed in the interface.
 - **SAMP & other JMMC softwares**\
 *JMMC* softwares are able to communicate by the *SAMP* system. For example the user can trigger an action on another *JMMC* software that will send an image to OImaging by *SAMP*, this will trigger an OImaging action.
 - **Composite actions**\
-Some actions implies other actions. For example, the `End Run` action implies the `Add result` action to add the result to the table, and the `Select input image` to set the new initial image in the input form.\
-Some actions are not directly available from the graphical interface and are solely called by other actions.
+Some actions implies other actions. For example, the `End Run` action implies the `Add Result` action to add the result to the table, and the `Select Init Image` to set the new initial image in the input form.\
+Some actions are not directly available from the graphical interface and are solely called by other actions, these are marked as "[internal]".
 - **Automatic**\
 Some actions are triggered more or else automatically by the OImaging software. For example OImaging tries to connect to the *SAMP* hub by the action *Register SAMP*.
 
