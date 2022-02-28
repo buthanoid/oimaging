@@ -63,6 +63,7 @@ The OIFitsFile contains:
   - the T3
   - the flux
 
+Note that as the [OI FITS format description](https://github.com/JMMC-OpenDev/OI-Imaging-JRA/blob/master/doc/interface/OI-Interface.pdf) says, the input and output parameters of the reconstruction are not stored as keywords of images, but belong to their own *HDU*. In the Java object the reconstruction parameters HDUs are represented by the class `ImageOiParam`.
 
 Location: OiTools
 
