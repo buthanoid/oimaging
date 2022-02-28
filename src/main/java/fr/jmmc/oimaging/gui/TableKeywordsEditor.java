@@ -39,17 +39,22 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToggleButton.ToggleButtonModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * This class displays and edit table params using swing widgets.
  */
-public final class TableKeywordsEditor extends javax.swing.JPanel implements ActionListener, PropertyChangeListener {
+public final class TableKeywordsEditor extends javax.swing.JPanel
+        implements ActionListener, PropertyChangeListener, ChangeListener {
 
     /** Class logger */
     private static final Logger logger = LoggerFactory.getLogger(TableKeywordsEditor.class.getName());
@@ -58,6 +63,7 @@ public final class TableKeywordsEditor extends javax.swing.JPanel implements Act
 
     private final static Insets INSETS = new Insets(2, 2, 2, 2);
     private final static Insets VERT_SPACE_INSETS = new Insets(20, 2, 2, 2);
+    private final static Insets VERTMORE_SPACE_INSETS = new Insets(40, 2, 2, 2);
 
     // members
     private SoftwareSettingsPanel notifiedParent = null;
@@ -137,7 +143,7 @@ public final class TableKeywordsEditor extends javax.swing.JPanel implements Act
             }
 
             // insert vertical space above SWAVE0 field (sparco)
-            Insets insets = SparcoInputParam.KEYWORD_SWAVE0.equals(name) ? VERT_SPACE_INSETS : INSETS;
+            Insets insets = SparcoInputParam.KEYWORD_SWAVE0.equals(name) ? VERTMORE_SPACE_INSETS : INSETS;
 
             addFormKeyword(name, getLabel(name), gridy, insets);
             gridy++;
@@ -279,35 +285,42 @@ public final class TableKeywordsEditor extends javax.swing.JPanel implements Act
         final JComponent component;
         boolean supportedKeyword = true;
 
-        switch (meta.getDataType()) {
-            case TYPE_CHAR:
-                if (meta.getStringAcceptedValues() == null) {
-                    component = new JTextField((value == null) ? "" : value.toString());
-                } else {
-                    JComboBox comboBox = new JComboBox(new GenericListModel(Arrays.asList(meta.getStringAcceptedValues()), true));
-                    comboBox.setPrototypeDisplayValue("XXXX");
-                    if (value != null) {
-                        comboBox.setSelectedItem(value);
+        // special cases
+        if (SparcoInputParam.KEYWORD_SNMODS.equals(name)) {
+            int intValue = (value instanceof Integer) ? (Integer) value : 1;
+            component = new JSpinner(new SpinnerNumberModel(intValue, 1, Integer.MAX_VALUE, 1));
+        } // normal cases
+        else {
+            switch (meta.getDataType()) {
+                case TYPE_CHAR:
+                    if (meta.getStringAcceptedValues() == null) {
+                        component = new JTextField((value == null) ? "" : value.toString());
+                    } else {
+                        JComboBox comboBox = new JComboBox(new GenericListModel(Arrays.asList(meta.getStringAcceptedValues()), true));
+                        comboBox.setPrototypeDisplayValue("XXXX");
+                        if (value != null) {
+                            comboBox.setSelectedItem(value);
+                        }
+                        comboBox.setRenderer(new LabelListCellRenderer());
+                        component = comboBox;
                     }
-                    comboBox.setRenderer(new LabelListCellRenderer());
-                    component = comboBox;
-                }
-                break;
-            case TYPE_DBL:
-                component = createFormattedTextField(SoftwareSettingsPanel.getDecimalFormatterFactory(),
-                        convertValueToField(name, meta.getUnits(), value));
-                break;
-            case TYPE_INT:
-                component = createFormattedTextField(SoftwareSettingsPanel.getIntegerFormatterFactory(), value);
-                break;
-            case TYPE_LOGICAL:
-                final JCheckBox checkbox = new JCheckBox();
-                checkbox.setSelected(Boolean.TRUE.equals(value));
-                component = checkbox;
-                break;
-            default:
-                component = new JTextField(meta.getDataType() + " UNSUPPORTED");
-                supportedKeyword = false;
+                    break;
+                case TYPE_DBL:
+                    component = createFormattedTextField(SoftwareSettingsPanel.getDecimalFormatterFactory(),
+                            convertValueToField(name, meta.getUnits(), value));
+                    break;
+                case TYPE_INT:
+                    component = createFormattedTextField(SoftwareSettingsPanel.getIntegerFormatterFactory(), value);
+                    break;
+                case TYPE_LOGICAL:
+                    final JCheckBox checkbox = new JCheckBox();
+                    checkbox.setSelected(Boolean.TRUE.equals(value));
+                    component = checkbox;
+                    break;
+                default:
+                    component = new JTextField(meta.getDataType() + " UNSUPPORTED");
+                    supportedKeyword = false;
+            }
         }
 
         // show description in tooltips:
@@ -340,6 +353,8 @@ public final class TableKeywordsEditor extends javax.swing.JPanel implements Act
                 ((JComboBox) component).addActionListener(this);
             } else if (component instanceof JCheckBox) {
                 ((JCheckBox) component).addActionListener(this);
+            } else if (component instanceof JSpinner) {
+                ((JSpinner) component).addChangeListener(this);
             }
         } else {
             ((JTextField) component).setEditable(false);
@@ -497,6 +512,18 @@ public final class TableKeywordsEditor extends javax.swing.JPanel implements Act
             final String name = component.getName();
             if (pce.getNewValue() != null) {
                 update(name, pce.getNewValue().toString());
+            }
+        }
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent ce) {
+        final JComponent component = (JComponent) ce.getSource();
+        if (component != null) {
+            final String name = component.getName();
+            if (component instanceof JSpinner) {
+                JSpinner jSpinner = (JSpinner) component;
+                update(name, jSpinner.getValue().toString());
             }
         }
     }
