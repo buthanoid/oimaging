@@ -73,6 +73,10 @@ public final class TableKeywordsEditor extends javax.swing.JPanel
     private final HashMap<String, FitsUnit> unitFields = new HashMap<String, FitsUnit>();
 
     /**
+     * state of the button show/hide for bandwith smearing (MIRA & SPARCO only)
+     */
+    private final ToggleButtonModel miraSmearingModel;
+    /**
      * state of the button show/hide for models (SPARCO only)
      */
     private final List<ToggleButtonModel> modelsShown = new ArrayList<>();
@@ -83,6 +87,10 @@ public final class TableKeywordsEditor extends javax.swing.JPanel
 
     /** Creates new form TableEditor */
     public TableKeywordsEditor() {
+        this.miraSmearingModel = new ToggleButtonModel();
+        this.miraSmearingModel.setSelected(false);
+        this.miraSmearingModel.setPressed(false);
+
         initComponents();
     }
 
@@ -115,10 +123,14 @@ public final class TableKeywordsEditor extends javax.swing.JPanel
         int gridy = 0;
         setLayout(new GridBagLayout());
 
-        // separating the sparco models keywords from the others
+        // separating the keywords treated normally, and specially treated ones, like sparco models keywords
+
         final List<String> filteredKeywordNames = new ArrayList<>(keywordNames.size());
+        final List<String> miraSmearingKeywords = new ArrayList<>();
         final List<String> sparcoModelsKeywords = new ArrayList<>();
+
         for (String keywordName : keywordNames) {
+            // sparco model keywords
             if ((keywordName.startsWith(SparcoInputParam.KEYWORD_MOD))
                     || (keywordName.startsWith(SparcoInputParam.KEYWORD_FLU))
                     || (keywordName.startsWith(SparcoInputParam.KEYWORD_SPEC))
@@ -128,25 +140,43 @@ public final class TableKeywordsEditor extends javax.swing.JPanel
                     || (keywordName.startsWith(SparcoInputParam.KEYWORD_DEX))
                     || (keywordName.startsWith(SparcoInputParam.KEYWORD_DEY))) {
                 sparcoModelsKeywords.add(keywordName);
-            } else {
+            } // mira keywords
+            else if ((keywordName.startsWith(MiraInputParam.KEYWORD_SMEAR_FC))
+                    || (keywordName.startsWith(MiraInputParam.KEYWORD_SMEAR_FN))) {
+                miraSmearingKeywords.add(keywordName);
+            } // other keywords
+            else {
                 filteredKeywordNames.add(keywordName);
             }
         }
 
-        // treating the keywords (except the sparco models keywords)
+        // treating the "normal" keywords
         for (final String name : filteredKeywordNames) {
-
-            // just before SMEAR_FN field, add a label line (mira & sparco)
-            if (MiraInputParam.KEYWORD_SMEAR_FN.equals(name)) {
-                addFormLabel("Bandwith smearing:", gridy, VERT_SPACE_INSETS);
-                gridy++;
-            }
 
             // insert vertical space above SWAVE0 field (sparco)
             Insets insets = SparcoInputParam.KEYWORD_SWAVE0.equals(name) ? VERTMORE_SPACE_INSETS : INSETS;
 
             addFormKeyword(name, getLabel(name), gridy, insets);
             gridy++;
+        }
+
+        // mira keywords
+        if (!miraSmearingKeywords.isEmpty()) {
+            // make room for the show hide button
+            int gridMem = gridy;
+            gridy++;
+            // the elements that will be shown / hidden
+            List<JComponent> miraSmearingComps = new ArrayList<>();
+            // adding the keywords
+            for (String keywordName : miraSmearingKeywords) {
+                List<JComponent> comps = addFormKeyword(keywordName, getLabel(keywordName), gridy, INSETS);
+                miraSmearingComps.addAll(comps);
+                gridy++;
+            }
+            // adding the show/hide button
+            addShowHideButton("Bandwith smearing", "Bandwith smearing",
+                    miraSmearingModel, miraSmearingComps,
+                    gridMem, VERT_SPACE_INSETS);
         }
 
         // ===== treating the sparco models keywords =====
@@ -199,7 +229,11 @@ public final class TableKeywordsEditor extends javax.swing.JPanel
                 // only after the keyword MOD, we insert the button to show/hide the other keywords
                 // except for the first model which does not have a button (its keywords are always shown)
                 if (isMODKeyword && (numModel != 0)) {
-                    addGroupButton(numModel, gridy);
+                    //addGroupButton(numModel, gridy);
+                    addShowHideButton(
+                            "hide keywords", "show keywords",
+                            modelsShown.get(numModel), modelsComps.get(numModel),
+                            gridy, INSETS);
                     gridy++;
                 }
 
@@ -216,13 +250,41 @@ public final class TableKeywordsEditor extends javax.swing.JPanel
     }
 
     /**
-     * add a label line in the form at coord gridy.
+     * add a show/hide button to show/hide other components
      *
-     * @param label label text
-     * @param gridy y coord in the form where to add the label
-     * @param insets insets for gridbagconstraints for jlabel
+     * @param labelSelected label worn by the button when selected
+     * @param labelUnselected label worn by the button when unselected
+     * @param model ToggleButtonModel for the button.
+     * @param elts the list of components to show / hide.
+     * @param gridy the y coord in the layout.
+     * @param insets the insets of the button in the layout.
+     * @return the created JToggleButton.
      */
-    private void addFormLabel(final String label, final int gridy, final Insets insets) {
+    private JToggleButton addShowHideButton(
+            final String labelSelected, final String labelUnselected,
+            final ToggleButtonModel model, final List<JComponent> elts,
+            final int gridy, final Insets insets
+    ) {
+        final JToggleButton showHideButton = new JToggleButton();
+
+        showHideButton.setModel(model);
+
+        // init
+        elts.forEach(jComponent -> jComponent.setVisible(showHideButton.isSelected()));
+        showHideButton.setText(showHideButton.isSelected() ? labelSelected : labelUnselected);
+        showHideButton.setIcon(showHideButton.isSelected() ? DOWN_ARROW.icon() : UP_ARROW.icon());
+
+        // event handler
+        showHideButton.addItemListener((ItemEvent e) -> {
+            elts.forEach(jComponent -> jComponent.setVisible(showHideButton.isSelected()));
+            showHideButton.setText(showHideButton.isSelected() ? labelSelected : labelUnselected);
+            showHideButton.setIcon(showHideButton.isSelected() ? DOWN_ARROW.icon() : UP_ARROW.icon());
+        });
+
+        // display matters
+        showHideButton.setOpaque(false);
+        showHideButton.setContentAreaFilled(false);
+        showHideButton.setHorizontalAlignment(SwingConstants.LEFT);
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = gridy;
@@ -231,43 +293,9 @@ public final class TableKeywordsEditor extends javax.swing.JPanel
         gridBagConstraints.insets = insets;
         gridBagConstraints.anchor = GridBagConstraints.CENTER;
 
-        final JLabel jLabel = new JLabel(label);
+        add(showHideButton, gridBagConstraints);
 
-        add(jLabel, gridBagConstraints);
-    }
-
-    /**
-     * add to the panel a button toggling show/hide for the keywords components of a model. (SPARCO only)
-     * @param numModel the number of the model (index for this.modelsComps and this.modelsShown)
-     * @param gridy the next gridbaglayout y coord available
-     */
-    private void addGroupButton(final int numModel, final int gridy) {
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = gridy;
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.insets = INSETS;
-        gridBagConstraints.anchor = GridBagConstraints.CENTER;
-
-        final JToggleButton groupButton = new JToggleButton();
-
-        groupButton.setModel(modelsShown.get(numModel));
-
-        groupButton.setOpaque(false);
-        groupButton.setContentAreaFilled(false);
-        groupButton.setHorizontalAlignment(SwingConstants.LEFT);
-
-        groupButton.setText(groupButton.isSelected() ? "hide keywords" : "show keywords");
-        groupButton.setIcon(groupButton.isSelected() ? DOWN_ARROW.icon() : UP_ARROW.icon());
-
-        groupButton.addItemListener((ItemEvent e) -> {
-            modelsComps.get(numModel).forEach(jc -> jc.setVisible(groupButton.isSelected()));
-            groupButton.setText(groupButton.isSelected() ? "hide keywords" : "show keywords");
-            groupButton.setIcon(groupButton.isSelected() ? DOWN_ARROW.icon() : UP_ARROW.icon());
-        });
-
-        add(groupButton, gridBagConstraints);
+        return showHideButton;
     }
 
     /**
