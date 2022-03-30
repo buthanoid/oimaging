@@ -11,6 +11,7 @@ import fr.jmmc.oitools.fits.FitsHeaderCard;
 import fr.jmmc.oitools.fits.FitsTable;
 import fr.jmmc.oitools.model.OIFitsFile;
 import java.util.ArrayList;
+import java.util.Locale;
 import javax.swing.ComboBoxModel;
 
 /**
@@ -76,44 +77,66 @@ public final class ServiceList {
         return getInstance().availableServices;
     }
 
+    /**
+     * Find the service from a string.
+     * @param name string containing the name of the service. It is meant to be as the result of 
+     * the `getProcSoftFromOiFitsFile` function, so the string can be "BSMEM", or "bsmem v2.2.1".
+     * The version has no influence on the returned service.
+     * @return the service found, or null.
+     */
     public static Service getAvailableService(final String name) {
         if (!StringUtils.isEmpty(name)) {
             final ComboBoxModel model = getInstance().availableServices;
             for (int i = 0, len = model.getSize(); i < len; i++) {
-                final Service service = (Service) model.getElementAt(i);
-                if (service.getName().equalsIgnoreCase(name)) {
-                    return service;
+                final Service candidateService = (Service) model.getElementAt(i);
+                final String candidateServiceName = candidateService.getName();
+                // name put to upper case, so we can find if it starts with candidateServiceName
+                // english locale used because toUpperCase have unwanted behaviour in turkish locale for example
+                final String ourServiceName = name.toUpperCase(Locale.ENGLISH);
+                
+                if (ourServiceName.startsWith(candidateServiceName)) {
+                    return candidateService;
                 }
             }
         }
         return null;
     }
-
+    
     public static Service getPreferedService() {
         return getInstance().preferedService;
     }
 
     public static Service getServiceFromOIFitsFile(final OIFitsFile oiFitsFile) {
         // try to guess and get service
-        String serviceName = getServiceNameFromOiFitsFile(oiFitsFile);
-        if (serviceName != null) {
-            return ServiceList.getAvailableService(serviceName);
+        String procSoft = getProcSoftFromOiFitsFile(oiFitsFile);
+        if (procSoft != null) {
+            return ServiceList.getAvailableService(procSoft);
         }
         return null;
     }
 
     /**
-     * Find the Service program from information in an OIFitsFile
+     * Find the `PROCSOFT` information from OIFitsFile.
+     * It uses the PROCSOFT output parameter if available. Else it drawbacks to other strategies.
      * @param oiFitsFile required
-     * @return the program or null if could not find information
+     * @return depends on what is found. It can be "bsmem v2.2.1", or "BSMEM", or null, for example.
      */
-    private static String getServiceNameFromOiFitsFile(final OIFitsFile oiFitsFile) {
+    private static String getProcSoftFromOiFitsFile(final OIFitsFile oiFitsFile) {
         if (oiFitsFile != null) {
             final FitsTable outputFitsTable = oiFitsFile.getImageOiData().getExistingOutputParam();
 
             if (outputFitsTable != null) {
                 
-                // Attempt 1: looking for a SOFTWARE output param
+                // Attempt 1: looking for a PROCSOFT output param
+                if (outputFitsTable.hasKeywordMeta(IRModel.KEYWORD_PROCSOFT.getName())) {
+                    Object algoValue = outputFitsTable.getKeywordValue(IRModel.KEYWORD_PROCSOFT.getName());
+                    if (algoValue instanceof String) {
+                        return (String) algoValue;
+                    }
+                }
+                
+                // Attempt 2: looking for a SOFTWARE output param
+                // it is an obsolete keyword but can still be found in old OI Fits files.
                 // TODO: there will be a ResultSetTableModel.getKeywordValue method in a future merge, maybe use it here
                 if (outputFitsTable.hasKeywordMeta(IRModel.KEYWORD_SOFTWARE.getName())) {
                     Object algoValue = outputFitsTable.getKeywordValue(IRModel.KEYWORD_SOFTWARE.getName());
@@ -122,7 +145,7 @@ public final class ServiceList {
                     }
                 }
 
-                // Attempt 2: looking for known specific keywords
+                // Attempt 3: looking for known specific keywords
                 // guessing WISARD program from SOFTWARE=WISARD output header card
                 if (outputFitsTable.hasHeaderCards()) {
                     FitsHeaderCard card = outputFitsTable.findFirstHeaderCard("SOFTWARE");

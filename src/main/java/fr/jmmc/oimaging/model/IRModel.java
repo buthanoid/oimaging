@@ -51,7 +51,13 @@ public final class IRModel {
     private static final Logger logger = LoggerFactory.getLogger(IRModel.class);
 
     public final static KeywordMeta KEYWORD_RATING = new KeywordMeta("RATING", "User rating of the result", Types.TYPE_INT);
+    // SOFTWARE is kept for backward compatibility. Use PROCSOFT.
     public final static KeywordMeta KEYWORD_SOFTWARE = new KeywordMeta("SOFTWARE", "Software used to produce the result", Types.TYPE_CHAR);
+    // PROCSOFT contains the software name, followed by its version, for example "BSMEM v2.1.1".
+    // However, you should only rely on the fact that PROCSOFT starts with the software name in any letter case.
+    // version could be missing, separated (or not) from the name by a space, etc. for example it could be just "MiRA".
+    public final static KeywordMeta KEYWORD_PROCSOFT = new KeywordMeta(
+            "PROCSOFT", "Image reconstruction software and version", Types.TYPE_CHAR);
     public final static KeywordMeta KEYWORD_START_DATE = new KeywordMeta("JOBSTART", "Starting timestamp of the run", Types.TYPE_CHAR);
     public final static KeywordMeta KEYWORD_END_DATE = new KeywordMeta("JOBEND", "Ending timestamp of the run", Types.TYPE_CHAR);
     public final static KeywordMeta KEYWORD_OIMAGING_COMMENT = new KeywordMeta("USERNOTE", "User comment written by OImaging GUI", Types.TYPE_CHAR);
@@ -904,9 +910,9 @@ public final class IRModel {
         // set KEYWORD_RATING if missing
         outputParams.setKeywordDefaultInt(KEYWORD_RATING.getName(), 0);
 
-        outputParams.addKeyword(KEYWORD_SOFTWARE);
-        // set KEYWORD_SOFTWARE if missing
-        outputParams.setKeywordDefault(KEYWORD_SOFTWARE.getName(), serviceResult.getService().getName());
+        outputParams.addKeyword(KEYWORD_PROCSOFT);
+        // set KEYWORD_PROCSOFT if missing. we do not set the version.
+        outputParams.setKeywordDefault(KEYWORD_PROCSOFT.getName(), serviceResult.getService().getName());
 
         outputParams.addKeyword(KEYWORD_START_DATE);
         // set KEYWORD_START_DATE if missing

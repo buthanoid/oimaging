@@ -33,7 +33,7 @@ public class Preferences extends fr.jmmc.oiexplorer.core.Preferences {
 
     /** Visible results columns order list, as of default */
     public static final List<String> COLUMNS_DEFAULT_VISIBLE = Arrays.asList(
-            "INDEX", "TARGET", "SOFTWARE", "INIT_IMG", "RGL_NAME", "RGL_WGT",
+            "INDEX", "TARGET", "PROCSOFT", "INIT_IMG", "RGL_NAME", "RGL_WGT",
             "NITER", "CHISQ", "SUCCESS", "RATING", "USERNOTE", "FOV", "FILE"
     );
 
@@ -125,7 +125,7 @@ public class Preferences extends fr.jmmc.oiexplorer.core.Preferences {
                 "FILE", "INDEX", "JOB_DURATION", "SUCCESS", "CHISQ", "DELTA",
                 "FLUX", "FLUXERR", "FOV", "JOBEND", "JOBSTART", "LAST_IMG",
                 "MAXITER", "NITER", "NP_MIN", "RATING", "RGL_NAME", "RGL_WGT",
-                "SOFTWARE", "TARGET", "USERNOTE", "VERSION", "WAVE_MAX", "WAVE_MIN",
+                "PROCSOFT", "TARGET", "USERNOTE", "VERSION", "WAVE_MAX", "WAVE_MIN",
                 "AUTO_WGT", "INIT_IMG", "RGL_ALPH", "RGL_BETA", "RGL_PRIO", "SCALE",
                 "THRESHOL", "USE_T3", "USE_VIS", "USE_VIS2", "ENTROPY", "FPRIOR",
                 "INITFLUX", "NDATA", "NEVAL", "PLUGIN", "PXL_MIN", "RECENTER", "REPEAT", "RGL_GAMM", "RGL_TAU",
