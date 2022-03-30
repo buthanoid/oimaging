@@ -76,52 +76,46 @@ public final class ServiceList {
     public static ComboBoxModel getAvailableServices() {
         return getInstance().availableServices;
     }
+    
+    public static Service getPreferedService() {
+        return getInstance().preferedService;
+    }
 
     /**
-     * Find the service from a string.
-     * @param name string containing the name of the service. It is meant to be as the result of 
-     * the `getProcSoftFromOiFitsFile` function, so the string can be "BSMEM", or "bsmem v2.2.1".
-     * The version has no influence on the returned service.
+     * Find the service from a name.
+     * @param name string containing the name of the service.
+     * It could be "BSMEM", or "MiRA", or "WISARD v2.2.1".
+     * It always starts with the name of the software in upper/lower/mixed case.
+     * It can be followed by a version number which is not used here.
      * @return the service found, or null.
      */
-    public static Service getAvailableService(final String name) {
+    public static Service getServiceFromName(final String name) {
+
         if (!StringUtils.isEmpty(name)) {
+
+            // english locale used because toUpperCase can have unwanted behaviour in turkish locale for example
+            final String upperName = name.toUpperCase(Locale.ENGLISH);
+
             final ComboBoxModel model = getInstance().availableServices;
             for (int i = 0, len = model.getSize(); i < len; i++) {
+
                 final Service candidateService = (Service) model.getElementAt(i);
-                final String candidateServiceName = candidateService.getName();
-                // name put to upper case, so we can find if it starts with candidateServiceName
-                // english locale used because toUpperCase have unwanted behaviour in turkish locale for example
-                final String ourServiceName = name.toUpperCase(Locale.ENGLISH);
-                
-                if (ourServiceName.startsWith(candidateServiceName)) {
+
+                if (upperName.startsWith(candidateService.getName())) {
                     return candidateService;
                 }
             }
         }
         return null;
     }
-    
-    public static Service getPreferedService() {
-        return getInstance().preferedService;
-    }
-
-    public static Service getServiceFromOIFitsFile(final OIFitsFile oiFitsFile) {
-        // try to guess and get service
-        String procSoft = getProcSoftFromOiFitsFile(oiFitsFile);
-        if (procSoft != null) {
-            return ServiceList.getAvailableService(procSoft);
-        }
-        return null;
-    }
 
     /**
-     * Find the `PROCSOFT` information from OIFitsFile.
-     * It uses the PROCSOFT output parameter if available. Else it drawbacks to other strategies.
-     * @param oiFitsFile required
-     * @return depends on what is found. It can be "bsmem v2.2.1", or "BSMEM", or null, for example.
+     * Guess the Service used to creathe the result in the OIFitsFile.
+     * It uses the PROCSOFT output parameter if available. Else it tries to other strategies.
+     * @param oiFitsFile the OIFitsfile which should contain a result and some information to guess the Service name.
+     * @return the guessed Service name, or null if there is unsufficient information.
      */
-    private static String getProcSoftFromOiFitsFile(final OIFitsFile oiFitsFile) {
+    private static String guessServiceName(final OIFitsFile oiFitsFile) {
         if (oiFitsFile != null) {
             final FitsTable outputFitsTable = oiFitsFile.getImageOiData().getExistingOutputParam();
 
@@ -190,6 +184,17 @@ public final class ServiceList {
                 }
             }
         }
+
         return null;
+    }
+
+    /**
+     * guess Service from OIFitsFile.
+     * It uses the PROCSOFT output parameter if available. Else it tries to other strategies.
+     * @param oiFitsFile the OIFitsfile which should contain a result and some information to guess the Service.
+     * @return the guessed Service, or null if there is unsufficient information.
+     */
+    public static Service guessService(final OIFitsFile oiFitsFile) {
+        return getServiceFromName(guessServiceName(oiFitsFile));
     }
 }

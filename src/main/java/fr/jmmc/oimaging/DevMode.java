@@ -120,7 +120,7 @@ public class DevMode {
         // note: serviceResult may be invalid
 
         // try to guess and set service
-        final Service service = ServiceList.getServiceFromOIFitsFile(serviceResult.getOifitsFile());
+        final Service service = ServiceList.guessService(serviceResult.getOifitsFile());
         if (service == null) {
             serviceResult.setService(ServiceList.getPreferedService());
         } else {

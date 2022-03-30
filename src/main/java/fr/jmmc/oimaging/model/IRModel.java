@@ -279,7 +279,7 @@ public final class IRModel {
         setSelectedRglPrioImageHdu(rglHduEquiv);
 
         // try to guess and set service
-        final Service oifitsFileService = ServiceList.getServiceFromOIFitsFile(oifitsFile);
+        final Service oifitsFileService = ServiceList.guessService(oifitsFile);
         setSelectedService(oifitsFileService == null ? ServiceList.getPreferedService() : oifitsFileService);
         initSpecificParams(false); // add keywords relating to the selected service
 
