@@ -97,7 +97,12 @@ public final class SparcoInputParam extends MiraInputParam {
         params.setKeywordDefaultDouble(KEYWORD_SWAVE0, 1E-6); // 1 microns
         params.setKeywordDefaultInt(KEYWORD_SNMODS, 1); // 1 star model (by default)
 
-        final int nmods = params.getKeywordInt(KEYWORD_SNMODS);
+        // forcing SNMODS to belong to [1;100]
+        final int rawNmods = params.getKeywordInt(KEYWORD_SNMODS);
+        final int nmods = Integer.min(100, Integer.max(1, rawNmods));
+        if (rawNmods != nmods) {
+            params.setKeywordInt(KEYWORD_SNMODS, nmods);
+        }
 
         for (int i = 0; i <= nmods; i++) {
 
