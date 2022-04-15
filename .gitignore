@@ -1,7 +1,11 @@
 /build/
 /failed-gui-tests/
 /fest-screenshots/
-/test/
+/test/*.fits
+/test/*.oifits
+/test/list/list.txt
+/test/list/*.fits
+/test/list/*.oifits
 /nbactions.xml
 /nb-configuration.xml
 /target/
