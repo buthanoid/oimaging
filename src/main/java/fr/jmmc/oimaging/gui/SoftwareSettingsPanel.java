@@ -450,6 +450,7 @@ public class SoftwareSettingsPanel extends javax.swing.JPanel {
         jPanelForm.add(jPanelView, gridBagConstraints);
 
         jButtonCreateImage.setText("Create image");
+        jButtonCreateImage.setName("jButtonCreateImage"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;

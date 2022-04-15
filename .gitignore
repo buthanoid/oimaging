@@ -6,6 +6,7 @@
 /test/list/list.txt
 /test/list/*.fits
 /test/list/*.oifits
+/test/list/results.txt
 /nbactions.xml
 /nb-configuration.xml
 /target/
