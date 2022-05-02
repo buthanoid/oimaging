@@ -31,7 +31,7 @@ then
 	      echo "" > tmp_download_header
 	      wget "$URL" -S --output-document=tmp_download_file 2> tmp_download_header
 	      
-	      FOUND=$(awk 'BEGIN {x=0} /200 OK/ {x=1} END {print 1}' tmp_download_header)
+	      FOUND=$(awk 'BEGIN {x=0} /200 OK/ {x=1} END {print x}' tmp_download_header)
 	      
 	      if [ "$FOUND" -eq 1 ]
 	      then
