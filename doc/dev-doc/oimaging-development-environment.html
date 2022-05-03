@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>oimaging-development-environment</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="oimaging-development-environment">OImaging Development Environment</h1>
+<h2 id="operating-system">Operating System</h2>
+<p>Development is made with Linux. If you want to use Windows, it would be simpler to run a virtual machine with Linux. If you really want to compile and develop directly from Windows, you should plan some time to resolve all the little bugs that will occur.</p>
+<h3 id="macos-via-docker-on-a-linux-os">MacOS via docker on a Linux OS</h3>
+<p>If you are under a Linux OS and you want to build OImaging on a MacOS you can do it via docker. Follow the tutorial at https://www.funkyspacemonkey.com/how-to-install-macos-catalina-in-a-docker-container-on-linux. You may need to enter the command <code>xhosts +</code> before <code>docker run</code>. Once you are running the MacOS virtual machine, install HomeBrew, then you can use it to install java (set the symbolic link as the installation says), maven, git, etc. Save your docker virtual machine with <code>docker commit</code> (look at a docker tutorial).</p>
+<h2 id="java-development-kit">Java Development Kit</h2>
+<ul>
+<li>OImaging aims to be compatible with version at least 1.8, so we use openjdk 1.8. Download it with your package manager or from https://openjdk.java.net/projects/jdk8/</li>
+<li>You can find your currents JDKs with command <code>update-alternatives --list java</code></li>
+</ul>
+<h2 id="maven">Maven</h2>
+<ul>
+<li>OImaging use Maven as project manager. Download it with your package manager or from https://maven.apache.org/download.cgi.</li>
+<li>An operational Maven version is 3.6.3. Be sure that your terminal is using the correct maven with commands <code>which mvn</code> and <code>mvn -version</code>.</li>
+<li>You should have a <code>~/.m2/</code> directory in your home folder. Please create a file <code>settings.xml</code> inside it and fill it with the following content:</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">&lt;settings&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    <span class="co">&lt;!-- offline</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="co">    | Determines whether maven should attempt to connect to the network when executing a build.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co">    | This will have an effect on artifact downloads, artifact deployment, and others.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="co">    |</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="co">    | Default: false</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="co">    --&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>    <span class="kw">&lt;offline&gt;</span>false<span class="kw">&lt;/offline&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>    <span class="kw">&lt;profiles&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>        <span class="kw">&lt;profile&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>            <span class="kw">&lt;id&gt;</span>dev<span class="kw">&lt;/id&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>            <span class="kw">&lt;properties&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>                <span class="co">&lt;!-- disable jar signer --&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>                <span class="kw">&lt;jarsigner.skip&gt;</span>true<span class="kw">&lt;/jarsigner.skip&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>                <span class="co">&lt;!-- disable javadoc --&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>                <span class="kw">&lt;maven.javadoc.skip&gt;</span>true<span class="kw">&lt;/maven.javadoc.skip&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>                <span class="co">&lt;!-- disable tests --&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>                <span class="kw">&lt;maven.test.skip&gt;</span>true<span class="kw">&lt;/maven.test.skip&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>            <span class="kw">&lt;/properties&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>        <span class="kw">&lt;/profile&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>    <span class="kw">&lt;/profiles&gt;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>    <span class="kw">&lt;activeProfiles&gt;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>        <span class="kw">&lt;activeProfile&gt;</span>dev<span class="kw">&lt;/activeProfile&gt;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a>    <span class="kw">&lt;/activeProfiles&gt;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a><span class="kw">&lt;/settings&gt;</span></span></code></pre></div>
+<h2 id="netbeans">Netbeans</h2>
+<ul>
+<li>Download a recent version from Apache. An operational version is 12.5, you can find it at https://netbeans.apache.org/download/nb125/nb125.html</li>
+<li>Do not install Netbeans from <em>Flatpak</em> as it uses its own JDK, we had problems with this (though it may be possible).</li>
+<li>Set the JDK 1.8 from Netbeans menu: <code>Tools</code> &gt; <code>Java Platforms</code> &gt; <code>Add Platform</code>.</li>
+<li>You can also set the default JDK for Netbeans in the configuration file <code>netbeans.conf</code>. For example put the param <code>netbeans_jdkhome</code> to <code>"/usr/lib/jvm/java-8-openjdk-amd64/"</code> (use your own location of your jdk).</li>
+<li>Be sure that <code>Tools</code> &gt; <code>Options</code> &gt; <code>Java</code> &gt; <code>Maven</code> displays the correct version of Maven. If it uses a too old “bundled” one that causes bugs, set the link to your own Maven instead.</li>
+<li>If Netbeans 12.6 has trouble to start properly, try to set the JDK in <code>netbeans.conf</code>, see below.</li>
+</ul>
+<h2 id="jmmc-java-build">JMMC Java Build</h2>
+<ul>
+<li>Clone the repository <a href="https://github.com/JMMC-OpenDev/jmmc-java-build">JMMC Java Build</a> and follow the README instructions (it consists of calling some bash scripts).</li>
+<li>While Netbeans will use the Java Platform selected, the bash script will call the <code>mvn</code> command directly, which do not use the Netbeans configuration with Java Platforms. You may check the Java version used by <code>mvn</code> with <code>mvn -version</code>. In case this Java version is problematic, set <code>$JAVA_HOME</code> to the correct JDK before launching the script.</li>
+</ul>
+<h2 id="contribute-to-oimaging-development">Contribute to OImaging development</h2>
+<ul>
+<li>Connect to a GitHUb account</li>
+<li>Fork the <a href="https://github.com/JMMC-OpenDev/oimaging">OImaging</a> project</li>
+<li>Clone your own OImaging repository on your computer</li>
+<li>Open it as a NetBeans project: you can build and run from there. You will need to have followed the JMMC Java Build instructions above because OImaging needs the other projects.</li>
+</ul>
+<p>To update your fork of OImaging with the lastest updates of the original repository do as follows:</p>
+<ul>
+<li>Go to your JMMC Java Build folder and run the scripts <code>update_modules.sh</code> and <code>build_gui.sh</code>. Indeed you need the lastest versions of the other projects used by OImaging.</li>
+<li>Go to your OImaging local folder.</li>
+<li>If not already done, add the remote : <code>git remote add upstream git@github.com:JMMC-OpenDev/oimaging.git</code></li>
+<li>Fetch the updates: <code>git fetch upstream</code></li>
+<li>Merge on your master branch : <code>git merge upstream/master</code>. You are responsible for merging the conflicts, of course.</li>
+<li>Push on your Github repository: <code>git push</code>.</li>
+</ul>
+<p>To propose an update:</p>
+<ul>
+<li>Create a branch on your fork</li>
+<li>Ask for a Pull Request on GitHub</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="linux-mint-and-netbeans-12.4">Linux Mint and Netbeans 12.4</h3>
+<p>With a recent update on Linux Mint, my Netbeans 12.4 was not working anymore. I solved it by installing Netbeans 12.5 instead.</p>
+</body>
+</html>
