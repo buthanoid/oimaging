@@ -13,14 +13,17 @@ Save your docker virtual machine with `docker commit` (look at a docker tutorial
 
 ## Java Development Kit
 
-- OImaging aims to be compatible with version at least 1.8, so we use openjdk 1.8. Download it with your package manager or from https://openjdk.java.net/projects/jdk8/
 - You can find your currents JDKs with command `update-alternatives --list java`
+- OImaging aims to be compatible with version at least 1.8, so we use openjdk 1.8. Download it with your package manager.
+  - if it is not available from package manager (for example if you are using Debian stable bulleye), you can get a jdk 8 from adoptium.net at https://adoptium.net/temurin/releases 
+  - you may want to register this `java` in your `etc/alternatives`: `sudo update-alternatives --install /usr/bin/java java $ADOPTIUM_FOLDER/jdk8u332-b09/bin/java  2222`, with `$ADOPTIUM_FOLDER` being the folder where you put the `jdk8u332-b09` you got from adoptium (numbers in the name may change). 
+  - Do the same for `javac` alternative: `sudo update-alternatives --install /usr/bin/javac javac $ADOPTIUM_FOLDER/jdk8u332-b09/bin/javac 2222`
 
 ## Maven
 
 - OImaging use Maven as project manager. Download it with your package manager or from https://maven.apache.org/download.cgi.
 - An operational Maven version is 3.6.3. Be sure that your terminal is using the correct maven with commands `which mvn` and `mvn -version`.
-- You should have a `~/.m2/` directory in your home folder. Please create a file `settings.xml` inside it and fill it with the following content:
+- You should have a `~/.m2/` directory in your home folder (if not, you should build some random thing with maven so it is correctly created). Create a file `settings.xml` inside it and fill it with the following content:
 
 ```xml
 <settings>
